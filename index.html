@@ -17,40 +17,73 @@
 
 <body>
 
-	<div id="app">
+	<div id="app" v-cloak>
 		
 		<div id="header">
-
+			<div id="inner-header">
+				<span id="header-icon" class="td td-beryl-icon"></span>
+				<div id="header-nav">
+					<span v-bind:id="item.value + '-nav'" class="nav-item noselect" v-for="item in navigation" v-on:click="navigate( item.value )">
+						<h5>{{ item.name }}</h5>
+					</span>
+					<span class="nav-line"></span>
+					<div id="header-social">
+						<span class="social-item td" v-bind:class="'td-' + item.icon" v-for="item in socials" v-bind:src="item.address"></span> 
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div id="main">
-			<div id="home">
+			<div id="home" v-if="!loading">
 				<div id="home-hero" class="hero-banner">
 					<div class="hero-text">
 						<h1>Hello, I'm Beryl</h1>
 						<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
 					</div>
-					<div class="hero-image">
-						<img src="">
+					<div class="hero-image" v-for="n in 6">
+						<img v-bind:src="'public/images/hero-' + n + '.png'" />
 					</div>
 				</div>
 
-				<div id="home-projects">
-					<div class="half-width-project" v-for="project in clients">
-						<div class="project-banner">
-
+				<div id="home-clients">
+					<div class="client-item" v-for="client in clients">
+						<div class="client-preview">
+							<img class="banner-img" v-bind:src="'public/images/' + client.banner" />
+							<div class="mobile-img" v-if="client.mobile">
+								<img v-bind:src="'public/images/' + client.mobile" />
+							</div>
 						</div>
-						<div class="project-body">
-							<h6>{{ project.brand }}</h6>
-							<h3>{{ project.title }}</h3>
-							<p>{{ project.summary }}</p>
+						<div class="client-body">
+							<h6>{{ client.brand }}</h6>
+							<h3>{{ client.title }}</h3>
+							<p>{{ client.summary }}</p>
 						</div>
 					</div>
 				</div>
 
-			</div>
+				<div class="project-item" v-for="( project, index ) in projects">
+					<div class="project-body">
+						<h6>{{ project.brand }}</h6>
+						<h2>{{ project.title }}</h2>
+						<h4>{{ project.summary }}</h4>
+					</div>
+					<div class="project-preview">
+						<img class="main-img" v-bind:src="'public/images/' + project.main_image" />
+						<img class="secondary-img" v-bind:src="'public/images/' + project.secondary_image" />
+					</div>
+				</div>
 
-			<div id="project">
+				<div class="illustration-item">
+					<div class="illustration-body">
+						<h2>{{ illustration.title }}</h2>
+						<h4>{{ illustration.summary }}</h4>
+					</div>
+					<div class="illustration-preview">
+						<img class="illustration-img" v-for="n in 3" v-bind:src="'public/images/Illustration_' + n +'.jpg'" />
+					</div>
+
+				</div>
 
 			</div>
 		</div>
@@ -58,10 +91,10 @@
 	</div>
 
 	<!-- ===== SCRIPTS ==== -->
-	
-	<script src="public/components/vue/dist/vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
 	<!-- SWITCH IN DEV FOR FINAL BUILD -->
-	<!-- <script src="public/components/vue/dist/vue.min.js"></script> -->
+	<!-- <script src="https://unpkg.com/vue/dist/vue.min.js"></script> -->
 	<script src="public/js/app.js"></script> 
 
 </body>
