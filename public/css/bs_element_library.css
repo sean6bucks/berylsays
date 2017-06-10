@@ -143,12 +143,10 @@ p {
 	margin-right: 46px;
 	cursor: pointer;
 }
-#header-nav .nav-line {
+#nav-line {
 	position: absolute;
 	top: 24px;
-	left: 4px;
 	height: 2px;
-	width: 74px;
 	background: #c2912e;
 	transition: all 200ms ease;
 }
