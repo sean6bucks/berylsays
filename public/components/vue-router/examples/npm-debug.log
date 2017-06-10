@@ -1,0 +1,40 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'run', 'build' ]
+2 info using npm@3.3.9
+3 info using node@v0.12.7
+4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
+5 info lifecycle vue-router@2.5.3~prebuild: vue-router@2.5.3
+6 silly lifecycle vue-router@2.5.3~prebuild: no script for prebuild, continuing
+7 info lifecycle vue-router@2.5.3~build: vue-router@2.5.3
+8 verbose lifecycle vue-router@2.5.3~build: unsafe-perm in lifecycle true
+9 verbose lifecycle vue-router@2.5.3~build: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/seankiefer/Desktop/code/BerylSite/site/public/components/vue-router/node_modules/.bin:/Users/seankiefer/.rvm/gems/ruby-2.0.0-p643/bin:/Users/seankiefer/.rvm/gems/ruby-2.0.0-p643@global/bin:/Users/seankiefer/.rvm/rubies/ruby-2.0.0-p643/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/Users/seankiefer/.rvm/bin
+10 verbose lifecycle vue-router@2.5.3~build: CWD: /Users/seankiefer/Desktop/code/BerylSite/site/public/components/vue-router
+11 silly lifecycle vue-router@2.5.3~build: Args: [ '-c', 'node build/build.js' ]
+12 silly lifecycle vue-router@2.5.3~build: Returned: code: 1  signal: null
+13 info lifecycle vue-router@2.5.3~build: Failed to exec build script
+14 verbose stack Error: vue-router@2.5.3 build: `node build/build.js`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+14 verbose stack     at EventEmitter.emit (events.js:110:17)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at ChildProcess.emit (events.js:110:17)
+14 verbose stack     at maybeClose (child_process.js:1015:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+15 verbose pkgid vue-router@2.5.3
+16 verbose cwd /Users/seankiefer/Desktop/code/BerylSite/site/public/components/vue-router/examples
+17 error Darwin 16.0.0
+18 error argv "node" "/usr/local/bin/npm" "run" "build"
+19 error node v0.12.7
+20 error npm  v3.3.9
+21 error code ELIFECYCLE
+22 error vue-router@2.5.3 build: `node build/build.js`
+22 error Exit status 1
+23 error Failed at the vue-router@2.5.3 build script 'node build/build.js'.
+23 error This is most likely a problem with the vue-router package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node build/build.js
+23 error You can get their info via:
+23 error     npm owner ls vue-router
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
