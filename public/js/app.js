@@ -1,5 +1,71 @@
 'use strict'
 
+// GLOBAL DATA
+const allProjects = [
+	{
+		// TODO: NEED 2x VERSIONS OF IMAGES
+		category: 'clients',
+		id: 'holay-inn',
+		brand: 'Holiday Inn',
+		title: 'What Would You Do with an Extra Day',
+		summary: 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals.',
+		banner: 'HolidayInn_preview_banner.jpg',
+		mobile: 'HolidayInn_preview_mobile.png'
+	},
+	{
+		category: 'clients',
+		id: 'ups',
+		brand: 'UPS',
+		title: 'UPS Whitepapers: Think Like a Leader',
+		summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions’ annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
+		banner: 'UPS_preview_banner.png',
+	},
+	{
+		category: 'clients',
+		id: 'ogilvy',
+		brand: 'Ogilvy',
+		title: 'Making Data tracking Simple',
+		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
+		banner: 'Ogilvy_preview_banner.png',
+	},
+	{
+		category: 'clients',
+		id: 'pepsi',
+		brand: 'Pepsi',
+		title: 'Welcome to the New Pepsi Challenge',
+		summary: 'In China, 12 Pepsi Ambassadors from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.',
+		banner: 'Pepsi_preview_banner.jpg',
+	},
+	{
+		category: 'events',
+		id: 'elvis',
+		brand: 'Elvis Fan Club',
+		title: 'A Teenage Dream, Realized',
+		summary: '"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.',
+		text: [
+			'How do you describe a dream come to life? A personal goal since high school, “Happy Birthday, Elvis” Fest was years in the making.',
+			'"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.'
+		],
+		main_image: 'Elvis_main.png',
+		secondary_image: 'Elvis_secondary.png'
+		
+	},
+	{
+		category: 'events',
+		id: 'top5',
+		brand: 'Pop Culture Poster Show',
+		title: 'What’s Your All-Time, Desert Island TOP 5?',
+		summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
+		main_image: 'Top5_main.png',
+		secondary_image: 'Top5_secondary.png'
+	},
+	{
+		category: 'illustration',
+		id: 'illustration',
+		title: 'Art & Illustration',
+		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.'
+	}
+];
 
 // GLOBAL CODE =====================
 // =================================
@@ -12,6 +78,18 @@ if ($) $.extend( jQuery.easing, {
     }
 });
 
+// REGISTER UPPERCASE FILTER
+Vue.filter('uppercase', function (value) {
+	if (!value) return;
+	if ( 'string' !== typeof value ) return value;
+	return value.toUpperCase();
+});
+Vue.filter('decodeHtml', function (value) {
+	var txt = document.createElement("textarea");
+	txt.innerHTML = value;
+	return txt.value;
+});
+
 // COMPONENTS ========
 
 const Header = Vue.component( 'bc-header', {
@@ -19,14 +97,18 @@ const Header = Vue.component( 'bc-header', {
 	template: 
 		`<div id="header">
 			<div id="inner-header">
-				<span id="header-icon" class="td td-beryl-icon"></span>
+				<span id="header-icon" class="td td-beryl-icon">
+					<img src="public/images/header/bgsc-logo.png" />
+				</span>
 				<div id="header-nav">
 					<span v-bind:id="item.value + '-nav'" class="nav-item noselect" v-for="item in navigation" v-on:click="navigate( item.value )">
-						<h5>{{ item.name }}</h5>
+						<h5>{{ item.name | uppercase }}</h5>
 					</span>
 					<span id="nav-line"></span>
 					<div id="header-social">
-						<span class="social-item td" v-bind:class="'td-' + item.icon" v-for="item in socials" v-bind:src="item.address"></span> 
+						<a span class="social-item" v-for="item in socials" v-bind:href="item.address" target="_blank">
+							<span class="bc" v-bind:class="'bc-' + item.icon"></span> 
+						</a>
 					</div>
 				</div>
 			</div>
@@ -64,9 +146,9 @@ const Header = Vue.component( 'bc-header', {
 		};
 	},
 	mounted: function() {
-		console.log('#'+ this.$route.name+'-nav');
-		var target = $('#'+ this.$route.name+'-nav')[0];
-
+		// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
+		var name = this.$route.name == 'project' ? 'projects' : this.$route.name; 
+		var target = $('#'+ name +'-nav')[0];
 		// SET START LOCATION FOR NAV LINE
 		$('#nav-line').css({
 			left: target.offsetLeft,
@@ -76,9 +158,11 @@ const Header = Vue.component( 'bc-header', {
 	methods: {
 		navigate: function( page ) {
 			if ( page == this.$route.name ) return;
-			router.push( page );
+			router.push({ name: page });
 
-			var target = $('#'+page+'-nav')[0];
+			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
+			var name = page == 'project' ? 'projects' : this.$route.name; 
+			var target = $('#'+ name +'-nav')[0];
 			$('#nav-line').animate({
 				left: target.offsetLeft,
 				width: target.offsetWidth
@@ -87,110 +171,103 @@ const Header = Vue.component( 'bc-header', {
 	}
 });
 
-const Projects = Vue.component( 'bc-projects', {
+// HOME ==== AKA PROJECTS
+var currentProject = {}
+
+const Home = Vue.component( 'bc-home', {
+	data: function(){
+		return {
+			transitionName: 'slide-up',
+		}
+	},
 	template: 
 		`<div id="home">
-			<div id="home-hero" class="hero-banner">
+			<transition :name="transitionName">
+				<router-view></router-view>
+			</transition>
+		</div>`,
+	watch: {
+		'$route': 'beforeRouteUpdate',
+	},
+	methods: {
+		beforeRouteUpdate: function( to, from ) {
+			if ( to.name == 'project' ) {
+				this.transitionName = 'slide-up';
+			// IF FROM PROJECT USE SLIDE DOWN CLOSE
+			} else if ( from.name == 'project' ) {
+				this.transitionName = 'slide-down';
+			}
+		}
+	}
+});
+
+
+//  PROJECTS
+
+const Projects = Vue.component( 'bc-projects', {
+	router,
+	template: 
+		`<div id="projects">
+			<div id="projects-hero" class="hero-banner">
 				<div class="hero-text">
 					<h1>Hello, I&apos;m Beryl</h1>
 					<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
 				</div>
 				<div class="hero-image" v-for="n in 6">
-					<img v-bind:src="'public/images/hero-' + n + '.png'" />
+					<img v-bind:src="'public/images/projects/hero-' + n + '.png'" />
 				</div>
 			</div>
 
-			<div id="home-clients">
-				<div class="client-item" v-for="client in clients">
+			<div id="projects-clients">
+				<div class="client-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
 					<div class="client-preview">
-						<img class="banner-img" v-bind:src="'public/images/' + client.banner" />
+						<img class="banner-img" v-bind:src="'public/images/projects/' + client.banner" />
 						<div class="mobile-img" v-if="client.mobile">
-							<img v-bind:src="'public/images/' + client.mobile" />
+							<img v-bind:src="'public/images/projects/' + client.mobile" />
 						</div>
 					</div>
 					<div class="client-body">
-						<h6>{{ client.brand }}</h6>
+						<h6>{{ client.brand | uppercase }}</h6>
 						<h3>{{ client.title }}</h3>
 						<p>{{ client.summary }}</p>
 					</div>
 				</div>
 			</div>
 
-			<div class="project-item" v-for="( project, index ) in projects">
+			<div class="project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
 				<div class="project-body">
-					<h6>{{ project.brand }}</h6>
+					<h6>{{ project.brand | uppercase }}</h6>
 					<h2>{{ project.title }}</h2>
 					<h4>{{ project.summary }}</h4>
 				</div>
 				<div class="project-preview">
-					<img class="main-img" v-bind:src="'public/images/' + project.main_image" />
-					<img class="secondary-img" v-bind:src="'public/images/' + project.secondary_image" />
+					<img class="main-img" v-bind:src="'public/images/projects/' + project.main_image" />
+					<img class="secondary-img" v-bind:src="'public/images/projects/' + project.secondary_image" />
 				</div>
 			</div>
 
-			<div class="illustration-item" v-if="illustration">
+			<div class="illustration-item" v-if="projects.illustration" v-on:click="showProject(projects.illustration)">
 				<div class="illustration-body">
-					<h2>{{ illustration.title }}</h2>
-					<h4>{{ illustration.summary }}</h4>
+					<h2>{{ projects.illustration.title }}</h2>
+					<h4>{{ projects.illustration.summary }}</h4>
 				</div>
 				<div class="illustration-preview">
-					<img class="illustration-img" v-for="n in 3" v-bind:src="'public/images/Illustration_' + n +'.jpg'" />
+					<img class="illustration-img" v-for="n in 3" v-bind:src="'public/images//projects/Illustration_' + n +'.jpg'" />
 				</div>
 			</div>
-		</div>
-		<router-view class="project-view"></router-view>`,
+		</div>`,
 	data: function() {
+		var projects = {};
+		$.each( allProjects, function(index, project){
+			var category = project.category;
+			if (!projects[category]) projects[category] = [];
+			projects[category].push( project );
+		});
+		console.log( projects );
 		return {
-			clients: [
-				{
-					// TODO: NEED 2x VERSIONS OF IMAGES
-					brand: 'Holiday Inn',
-					title: 'What Would You Do with an Extra Day',
-					summary: 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals.',
-					banner: 'HolidayInn_preview_banner.jpg',
-					mobile: 'HolidayInn_preview_mobile.png'
-				},
-				{
-					brand: 'UPS',
-					title: 'UPS Whitepapers: Think Like a Leader',
-					summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions’ annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
-					banner: 'UPS_preview_banner.png',
-				},
-				{
-					brand: 'Ogilvy',
-					title: 'Making Data tracking Simple',
-					summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
-					banner: 'Ogilvy_preview_banner.png',
-				},
-				{
-					brand: 'Pepsi',
-					title: 'Welcome to the New Pepsi Challenge',
-					summary: 'In China, 12 Pepsi Ambassadors from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.',
-					banner: 'Pepsi_preview_banner.jpg',
-				}
-			],
-			projects: [
-				{
-					brand: 'Elvis Fan Club',
-					title: 'A Teenage Dream, Realized',
-					summary: '"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.',
-					main_image: 'Elvis_main.png',
-					secondary_image: 'Elvis_secondary.png'
-					
-				},
-				{
-					brand: 'Pop Culture Poster Show',
-					title: 'What’s Your All-Time, Desert Island TOP 5?',
-					summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
-					main_image: 'Top5_main.png',
-					secondary_image: 'Top5_secondary.png'
-				}
-			],
-			illustration: {
-				title: 'Art & Illustration',
-				summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.'
-			}
-		};
+			projects: projects,
+			currentProject: currentProject
+		}
 	},
 	mounted: function() {
 		var $this = this;
@@ -204,7 +281,6 @@ const Projects = Vue.component( 'bc-projects', {
 	},
 	methods: {
 		nextSlide: function() {
-			console.log('loop');
 			var $this = this;
 			// CAROUSEL FOR HERO BANNER GEMS
 			var slide = $('.hero-image.active');
@@ -223,7 +299,51 @@ const Projects = Vue.component( 'bc-projects', {
 			$this.berylLoop = setTimeout(function() {
 				$this.nextSlide();
 			}, 1500);
+		},
+		showProject: function(project) {
+			currentProject = project;
+			router.push({ name: 'project', params: { id: project.id }});
 		}
+	}
+});
+
+// PROJECTS CHILDREN ( DETAIL PAGE )
+
+const Project = Vue.component( 'bc-detail', {
+	router,
+	template:
+		`<div :id="currentProject.id +'-detail'" class="project-detail">
+			<router-link :to="{ name: 'projects' }" class="close-x"></router-link>
+			<div class="project-block">
+				<div class="left-column">
+					<h6>{{ currentProject.brand | uppercase }}</h6>
+					<h2>{{ currentProject.title }}</h2>
+					<p class="h4" v-for="text in currentProject.text">{{ text }}</p>
+					<p class="h4" v-if="!currentProject.text">{{ currentProject.summary }}</p>
+					// TODO: ADD TAGS ON BOTTOM
+				</div>
+				<div class="right-column">
+					<div class="skretch">
+						<div class="skretch2">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>`,
+	data: function() {
+		return {
+			currentProject: currentProject
+		}
+	},
+	mounted: function() {
+	
+	},
+	beforeDestroy: function() {
+
+	},
+	methods: {
+
 	}
 });
 
@@ -334,12 +454,23 @@ const Contact = Vue.component( 'bc-contact', {
 var router = new VueRouter({
 	routes: [
 		{ path: '/', redirect: '/projects' },
-		{ 
+		{
 			path: '/projects',
-			name: 'projects', 
-			component: Projects,
-			props: true,
-			alwaysRefresh: true
+			component: Home,
+			alwaysRefresh: true,
+			children: [
+				{ 
+					path: '',
+					name: 'projects', 
+					component: Projects,
+					props: true
+				},
+				{
+					path: '/projects/:id',
+					name: 'project',
+					component: Project
+				},
+			]
 		},
 		{ 
 			path: '/about',
@@ -363,22 +494,59 @@ var router = new VueRouter({
 
 var beryl = new Vue({
 	router,
+	data: {
+		transitionName: 'slide-left'
+	},
 	template: 
 	`<div id="app" v-cloak>
 		<bc-header></bc-header>
 		<div id="main">
-			<router-view class="view"></router-view>
+			<transition :name="transitionName">
+				<router-view class="view"></router-view>
+			</transition>
 		</div>
 	</div>`,
-	data: {},
 	props: ['loading'],
+	beforeMount: function() {
+		if ( this.$route.name == 'project' && ( !currentProject || !currentProject.id ) ) {
+			currentProject = findWhere( allProjects, { id: this.$route.params.id });
+		}
+	},
 	mounted: function() {
 		console.log('Ready');
 		this.loading = false;
 	},
+	watch: {
+		'$route' : 'beforeRouteUpdate',
+	},
 	methods: {
-
+		beforeRouteUpdate: function( to, from ) {
+			// DETERMINE IF NAVIGATION OPENING PROJECT OR PAGE CHANGE
+			if ( to.name == 'project' ) {
+				this.transitionName = 'slide-up';
+			// IF FROM PROJECT USE SLIDE DOWN CLOSE
+			} else if ( from.name == 'project' ) {
+				this.transitionName = 'slide-down';
+			} else {
+				if ( to.name == 'projects' ) this.transitionName = 'slide-right';
+				else if ( to.name =='contact' ) this.transitionName = 'slide-left';
+				else this.transitionName = from.name == 'projects' ? 'slide-left' : 'slide-right';
+			}
+		}
 	}
 }).$mount('#app');
 
-
+function findWhere(target, value) {
+	var key, val;
+	if ( 'object' === typeof target ) {
+		key = Object.keys(value)[0];
+		val = value[key];
+		var found;
+		$.each( target, function(index, object) {
+			if ( object[key] == val ) found = object;
+		});
+		return found;
+	} else if ( 'function' == typeof value ) {
+		// TODO: FINISH
+	}
+};
