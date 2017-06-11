@@ -350,3 +350,183 @@ p {
 	flex-grow: 3;
 	width: 33.33%;
 }
+/* === ABOUT === */
+
+#about {
+	width: 100%;
+}
+
+#personal-info,
+#beryl-info {
+	padding: 50px 20px;
+	margin: 0 auto;
+	max-width: 1180px;
+	width: 100%;	
+}
+
+.left-block, .right-block {
+	display: inline-block;
+	vertical-align: top;
+}
+.left-block {
+	width: calc( 100% - 400px );
+}
+.right-block {
+	width: 400px;
+	padding-left: 20px;
+	float: right;
+}
+
+#personal-info .text-block {
+	width: 100%;
+	max-width: 600px;
+}
+
+#personal-info h3 {
+	margin-bottom: 30px;
+}
+
+#personal-info .h6,
+#beryl-info .h5 {
+	margin-bottom: 15px;
+}
+
+#personal-info .right-block {
+	text-align: right;
+}
+#personal-info .right-block img {
+	vertical-align: top;
+	width: 300px;
+	height: auto;
+}
+
+#beryl-info .minerals-block {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.minerals-block .mineral-img {
+	vertical-align: top;
+	height: auto;
+	padding: 0 5px;
+}
+.minerals-block .mineral-img:nth-child(1) {
+	width: 33.33%;
+	flex-grow: 3;
+}
+.minerals-block .mineral-img:nth-child(2) {
+	flex-grow: 3;
+	width: 33.33%;
+}
+.minerals-block .mineral-img:nth-child(3) {
+	flex-grow: 2;
+	width: 22.22%;
+}
+
+
+/* === CONTACT === */
+
+#contact {
+	width: 100%;
+}
+
+#contact-block {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 50px 20px;
+	margin: 0 auto;
+	max-width: 1180px;
+	width: 100%;
+}
+
+.contact-info,
+.contact-form {
+	flex: 0 0 49%;
+	margin-bottom: 50px;
+}
+
+.contact-info * {
+	font-size: 24px;
+}
+.contact-info .email-link {
+	font-weight: 700;
+	text-decoration: underline;
+}
+
+/* Form Style */
+
+.group-label {
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+
+.form-group {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-bottom: 30px;
+}
+
+.input-group {
+	flex: 0 0 100%;
+}
+.input-group.half-width {
+	flex: 0 0 49%;
+}
+
+.submit-btn,
+.input-group input,
+.input-group textarea {
+	font-size: 18px;
+	outline: none;
+	box-shadow: none;
+}
+
+.input-group input,
+.input-group textarea {
+	width: 100%;
+}
+
+.input-group input {
+	border: none;
+	border-bottom: 2px solid #000;
+	height: 30px;
+}
+
+.input-group textarea {
+	border: 2px solid #000;
+	resize: none;
+	height: 100px;
+	padding: 5px;
+}
+
+.submit-btn {
+	display: inline-block;
+	float: right;
+	height: 40px;
+	padding: 0 45px;
+	background: #000;
+	border: 1px solid #000;
+	color: #fff;
+	letter-spacing: 2.4px;
+	font-weight: 700;
+	transition: all .2s ease;
+	cursor: pointer;
+}
+.submit-btn:hover {
+	background: #333;
+	border-color: #333;
+}
+.submit-btn:active {
+	background: #fff;
+	color: #000;
+	border-color: #000;
+}

@@ -227,8 +227,105 @@ const Projects = Vue.component( 'bc-projects', {
 	}
 });
 
+
+
+// ABOUT 
+
 const About = Vue.component( 'bc-about', {
-	template: `<div><h1>ABOUT</h1></div>`,
+	data: function() {
+		return {
+			personal: {
+				career: 'Beryl Chung is an art director, illustrator, and designer working in digital media & advertising. She is currently living in Shanghai spending her hard-earned wages on soup dumplings & karaoke.',
+				bio: 'Beryl was born & raised in New York and is an only child, which explains a lot about her personality. She has a BFA from Parsons the New School for Design.',
+				experience: 'Beryl’s experience extends across multiple industries, for a roster of both national and international clients. Clients include: Intercontinental Hotels Group, H&M, Ermenegildo Zegna, Pepsi, UPS, Unilever, Dupont, Brand USA, NFL, Premier League.',
+				features: [
+					{ name: 'Giant Robot NY', link: '' },
+					{ name: 'Juxtapoz Magazine', link: 'https://www.juxtapoz.com/news/illustration/beryl-chungs-dedication-to-the-king-of-rock-and-roll/' }
+				]
+			},
+			beryl: {
+				headline: 'Beryl is a mineral composed of beryllium aluminium cyclosilicate with the chemical formula Be&#8323;Al&#8322;(SiO3)&#8326;.',
+				subtext: 'Naturally occurring, hexagonal crystals of beryl can be up to several meters in size. Notable gemstones which contain beryllium include beryl (aquamarine, emerald) and chrysoberyl. As a free element it is a steel-gray, strong, lightweight and brittle alkaline earth metal.'
+			}
+		}
+	},
+	template: 
+		`<div id="about">
+			<div id="personal-info">
+				<div class="left-block">
+					<div class="text-block">
+						<h3>{{ personal.career }}</h3>
+						<h3>{{ personal.bio }}</h3>
+						<p class="h6">{{ personal.experience }}</p>
+						<p class="h6">
+							Featured in: <span v-for="(featured, index ) in personal.features"><a v-bind:href="featured.link">{{ featured.name }}</a><span v-show="index+1 < personal.features.length">, </span></span>
+						</p>
+					</div>
+				</div>
+				<div class="right-block">
+					<img src="public/images/about/profile.jpg" />
+				</div>
+			</div>
+			<div id="beryl-info">
+				<div class="left-block">
+					<div class="minerals-block">
+						<img class="mineral-img" v-for="n in 3" v-bind:src="'public/images/about/mineral-' + n +'.png'" />
+					</div>
+				</div>
+				<div class="right-block">
+					<p class="h5">{{ beryl.headline | decodeHtml }}</p>
+					<p>{{ beryl.subtext }}</p>
+				</div>
+			</div>
+		</div>`,
+});
+
+// CONTACT
+
+const Contact = Vue.component( 'bc-contact', {
+	template:
+		`<div id="contact">
+			<div id="contact-block">
+				<div class="contact-info">
+					<p>Get in touch using this<br>form or email</p>
+					<a class="email-link">hi@berylchung.com</a>
+				</div>
+				<div class="contact-form">
+					<form>
+						<p class="group-label">Name</p>
+						<div class="form-group">
+							<div class="input-group half-width">
+								<input />
+								<p>First Name</p>
+							</div>
+							<div class="input-group half-width">
+								<input />
+								<p>Last Name</p>
+							</div>
+						</div>
+						<p class="group-label">Email Address</p>
+						<div class="form-group">
+							<div class="input-group">
+								<input />
+							</div>
+						</div>
+						<p class="group-label">Subject</p>
+						<div class="form-group">
+							<div class="input-group">
+								<input />
+							</div>
+						</div>
+						<p class="group-label">Message</p>
+						<div class="form-group">
+							<div class="input-group">
+								<textarea></textarea>
+							</div>
+						</div>
+						<button class="submit-btn" type="submit">SUBMIT</button>
+					</form>
+				</div>
+			</div>
+		</div>`
 });
 
 
@@ -253,7 +350,7 @@ var router = new VueRouter({
 		{
 			path: '/contact',
 			name: 'contact',
-			component: null,
+			component: Contact,
 			props: true
 		}
 	]
