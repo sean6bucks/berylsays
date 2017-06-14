@@ -24,7 +24,7 @@ const allProjects = [
 		category: 'clients',
 		id: 'ogilvy',
 		brand: 'Ogilvy',
-		title: 'Making Data tracking Simple',
+		title: 'Making Data Tracking Simple',
 		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
 		banner: 'Ogilvy_preview_banner.png',
 	},
@@ -47,8 +47,8 @@ const allProjects = [
 			'"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.'
 		],
 		main_image: 'Elvis_main.png',
-		secondary_image: 'Elvis_secondary.png'
-		
+		secondary_image: 'Elvis_secondary.png',
+
 	},
 	{
 		category: 'events',
@@ -57,7 +57,24 @@ const allProjects = [
 		title: 'What’s Your All-Time, Desert Island TOP 5?',
 		summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
 		main_image: 'Top5_main.png',
-		secondary_image: 'Top5_secondary.png'
+		secondary_image: 'Top5_secondary.png',
+		elements: [
+			{
+				type: 'gallery',
+				slides: [ 'slide1.jpg','slide2.jpg', 'slide3.jpg', 'slide4.jpg', 'slide5.jpg' ]
+			},
+			{
+				type: 'images',
+				images: [
+					{ src: 'flyer.jpg' },
+					{ src: 'poster.png' }
+				]
+			},
+			{
+				type: 'video',
+				url: ''
+			}
+		]
 	},
 	{
 		category: 'illustration',
@@ -208,51 +225,53 @@ const Projects = Vue.component( 'bc-projects', {
 	router,
 	template: 
 		`<div id="projects">
-			<div id="projects-hero" class="hero-banner">
-				<div class="hero-text">
-					<h1>Hello, I&apos;m Beryl</h1>
-					<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
+			<div class="inner-container">
+				<div id="projects-hero" class="hero-banner">
+					<div class="hero-text">
+						<h1>Hello, I&apos;m Beryl</h1>
+						<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
+					</div>
+					<div class="hero-image" v-for="n in 6">
+						<img :src="'public/images/projects/hero-' + n + '.png'" />
+					</div>
 				</div>
-				<div class="hero-image" v-for="n in 6">
-					<img v-bind:src="'public/images/projects/hero-' + n + '.png'" />
-				</div>
-			</div>
 
-			<div id="projects-clients">
-				<div class="client-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
-					<div class="client-preview">
-						<img class="banner-img" v-bind:src="'public/images/projects/' + client.banner" />
-						<div class="mobile-img" v-if="client.mobile">
-							<img v-bind:src="'public/images/projects/' + client.mobile" />
+				<div id="projects-clients">
+					<div class="client-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
+						<div class="client-preview">
+							<img class="banner-img" :src="'public/images/projects/' + client.banner" />
+							<div class="mobile-img" v-if="client.mobile">
+								<img :src="'public/images/projects/' + client.mobile" />
+							</div>
+						</div>
+						<div class="client-body">
+							<h6>{{ client.brand | uppercase }}</h6>
+							<h3>{{ client.title }}</h3>
+							<p>{{ client.summary }}</p>
 						</div>
 					</div>
-					<div class="client-body">
-						<h6>{{ client.brand | uppercase }}</h6>
-						<h3>{{ client.title }}</h3>
-						<p>{{ client.summary }}</p>
+				</div>
+
+				<div class="project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
+					<div class="project-body">
+						<h6>{{ project.brand | uppercase }}</h6>
+						<h2>{{ project.title }}</h2>
+						<h4>{{ project.summary }}</h4>
+					</div>
+					<div class="project-preview">
+						<img class="main-img" :src="'public/images/projects/' + project.main_image" />
+						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" />
 					</div>
 				</div>
-			</div>
 
-			<div class="project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
-				<div class="project-body">
-					<h6>{{ project.brand | uppercase }}</h6>
-					<h2>{{ project.title }}</h2>
-					<h4>{{ project.summary }}</h4>
-				</div>
-				<div class="project-preview">
-					<img class="main-img" v-bind:src="'public/images/projects/' + project.main_image" />
-					<img class="secondary-img" v-bind:src="'public/images/projects/' + project.secondary_image" />
-				</div>
-			</div>
-
-			<div class="illustration-item" v-if="projects.illustration" v-on:click="showProject(projects.illustration)">
-				<div class="illustration-body">
-					<h2>{{ projects.illustration.title }}</h2>
-					<h4>{{ projects.illustration.summary }}</h4>
-				</div>
-				<div class="illustration-preview">
-					<img class="illustration-img" v-for="n in 3" v-bind:src="'public/images//projects/Illustration_' + n +'.jpg'" />
+				<div class="illustration-item" v-if="projects.illustration" v-on:click="showProject(projects.illustration)">
+					<div class="illustration-body">
+						<h2>{{ projects.illustration.title }}</h2>
+						<h4>{{ projects.illustration.summary }}</h4>
+					</div>
+					<div class="illustration-preview">
+						<img class="illustration-img" v-for="n in 3" :src="'public/images//projects/Illustration_' + n +'.jpg'" />
+					</div>
 				</div>
 			</div>
 		</div>`,
@@ -323,9 +342,29 @@ const Project = Vue.component( 'bc-detail', {
 					// TODO: ADD TAGS ON BOTTOM
 				</div>
 				<div class="right-column">
-					<div class="skretch">
-						<div class="skretch2">
+					<div class="inner-container">
+						<div class="project-element" v-for="element in currentProject.elements">
+							<div class="project-gallery" v-if="element.type=='gallery'">
+								<div class="gallery-slider">
+									<transition-group :name="transitionName" tag="ul">
+										<li class="gallery-slide" v-for="( slide, index ) in element.slides" :key="slide" v-show="currentSlide==index">
+											<img :src="'public/images/projects/' + currentProject.id + '/' + slide" />
+										</li>
+									</transition-group>
+								</div>
+								<div class="gallery-buttons">
+									<span class="gallery-button" v-on:click="changeSlide('last', element )"></span>
+									<span class="gallery-button" v-on:click="changeSlide('next', element )"></span>
+								</div>
+							</div>
+							<div class="project-images" v-if="element.type=='images'">
+								<div class="project-image" v-for="image in element.images" :key="image.src">
+									<img :src="'public/images/projects/' + currentProject.id + '/' + image.src">
+								</div>
+							</div>
+							<div class="project-video" v-if="element.type=='video'">
 
+							</div>
 						</div>
 					</div>
 				</div>
@@ -333,17 +372,31 @@ const Project = Vue.component( 'bc-detail', {
 		</div>`,
 	data: function() {
 		return {
-			currentProject: currentProject
+			currentProject: currentProject,
+			transitionName: 'slide-left',
+			currentSlide: 0,
+			slideInt: 0
 		}
 	},
 	mounted: function() {
-	
+		
 	},
 	beforeDestroy: function() {
 
 	},
 	methods: {
+		changeSlide: function(dir, element){
+			var length = element.slides.length;
+			
+			if ( dir == 'next' ) this.slideInt++;
+			else this.slideInt--;
 
+			if ( this.slideInt < 0 ) this.slideInt = length - 1;
+
+			this.transitionName = dir + '-slide';
+			console.log(this.transitionName);
+			this.currentSlide = this.slideInt % length;
+		}
 	}
 });
 
@@ -389,7 +442,7 @@ const About = Vue.component( 'bc-about', {
 			<div id="beryl-info">
 				<div class="left-block">
 					<div class="minerals-block">
-						<img class="mineral-img" v-for="n in 3" v-bind:src="'public/images/about/mineral-' + n +'.png'" />
+						<img class="mineral-img" v-for="n in 3" :src="'public/images/about/mineral-' + n +'.png'" />
 					</div>
 				</div>
 				<div class="right-block">
@@ -408,7 +461,7 @@ const Contact = Vue.component( 'bc-contact', {
 			<div id="contact-block">
 				<div class="contact-info">
 					<p>Get in touch using this<br>form or email</p>
-					<a class="email-link">hi@berylchung.com</a>
+					<a class="email-link" href="mailto:hi@berylchung.com?Subject=Hi">hi@berylchung.com</a>
 				</div>
 				<div class="contact-form">
 					<form>
