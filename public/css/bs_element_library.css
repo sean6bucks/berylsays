@@ -480,7 +480,8 @@ a:hover {
 
 .project-gallery,
 .project-images,
-.project-video {
+.project-video,
+.flex-grid {
 	width: 100%;
 }
 
@@ -543,6 +544,22 @@ a:hover {
 }
 
 /* embedded video */
+
+.project-video {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+	background-size: cover;
+}
+
+.project-video iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 
 
 /* === ABOUT === */

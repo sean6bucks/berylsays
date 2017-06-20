@@ -5,12 +5,23 @@ const allProjects = [
 	{
 		// TODO: NEED 2x VERSIONS OF IMAGES
 		category: 'clients',
-		id: 'holay-inn',
+		id: 'holiday-inn',
 		brand: 'Holiday Inn',
 		title: 'What Would You Do with an Extra Day',
 		summary: 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals.',
 		banner: 'HolidayInn_preview_banner.jpg',
-		mobile: 'HolidayInn_preview_mobile.png'
+		mobile: 'HolidayInn_preview_mobile.png',
+		elements: [
+			{
+				type: 'video',
+				video_url: 'https://www.youtube.com/embed/zalWvCoyiYM',
+				screenshot: 'hi_screenshot.png'
+			},
+			{
+				type: 'images',
+				images: [ 'HI-01.jpg', 'HI-02.jpg', 'HI-03.jpg' ]
+			}
+		]
 	},
 	{
 		category: 'clients',
@@ -19,6 +30,17 @@ const allProjects = [
 		title: 'UPS Whitepapers: Think Like a Leader',
 		summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions’ annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
 		banner: 'UPS_preview_banner.png',
+		elements: [
+			{
+				type: 'video',
+				video_url: 'https://www.youtube.com/embed/anzd1EqI9jg',
+				screenshot: 'ups_screenshot.png'
+			},
+			{
+				type: 'images',
+				images: [ 'UPS-infographic.jpg' ]
+			}
+		]
 	},
 	{
 		category: 'clients',
@@ -27,6 +49,38 @@ const allProjects = [
 		title: 'Making Data Tracking Simple',
 		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
 		banner: 'Ogilvy_preview_banner.png',
+		elements: [
+			{
+				type: 'video',
+				video_url: 'https://www.youtube.com/embed/SyQt6jIkobk',
+				screenshot: 'data_screenshot.png'
+			},
+			{
+				type: 'flex-grid',
+				images: [ 
+					{
+						type: 'image',
+						value: 'DATA01.gif'
+					},
+					{
+						type: 'image',
+						value: 'DATA02.gif' 
+					},
+					{
+						type: 'image',
+						value: 'DATA03.gif' 
+					},
+					{
+						type: 'image',
+						value: 'DATA04.gif' 
+					}
+				]
+			},
+			{
+				type: 'images',
+				images: [ 'DATA-storyboard.jpg' ]
+			}
+		]
 	},
 	{
 		category: 'clients',
@@ -35,6 +89,20 @@ const allProjects = [
 		title: 'Welcome to the New Pepsi Challenge',
 		summary: 'In China, 12 Pepsi Ambassadors from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.',
 		banner: 'Pepsi_preview_banner.jpg',
+		elements: [
+			{
+				type: 'images',
+				images: [ 'Pepsi-01.jpg', 'Pepsi-02.jpg' ]
+			},
+			{
+				type: 'image-grid',
+				images: []
+			},
+			{
+				type: 'images',
+				images: [ 'Pepsi-04.jpg' ]
+			}
+		]
 	},
 	{
 		category: 'events',
@@ -48,7 +116,34 @@ const allProjects = [
 		],
 		main_image: 'Elvis_main.png',
 		secondary_image: 'Elvis_secondary.png',
-
+		elements: [
+			{
+				type: 'gallery',
+				slides: [ 'Elvis-slide1.png', 'Elvis-slide2.jpg', 'Elvis-slide3.jpg', 'Elvis-slide4.jpg', 'Elvis-slide5.jpg', 'Elvis-slide6.png', 'Elvis-slide7.jpg', 'Elvis-slide8.png' ]
+			},
+			{
+				type: 'images',
+				images: [ 'Elvis-flyers.png', 'Elvis-collage.png', 'Elvis-tshirt.jpg' ]
+			},
+			{
+				type: 'video',
+				video_url: 'https://www.youtube.com/embed/jGr9ZPAMK-M',
+				screenshot: 'elvis_screenshot.png'
+			},
+			{
+				type: 'flex-grid',
+				items: [
+					{
+						type: 'text',
+						value: ''
+					},
+					{
+						type: 'text',
+						value: ''
+					}
+				]
+			}
+		]
 	},
 	{
 		category: 'events',
@@ -65,14 +160,7 @@ const allProjects = [
 			},
 			{
 				type: 'images',
-				images: [
-					{ src: 'flyer.jpg' },
-					{ src: 'poster.png' }
-				]
-			},
-			{
-				type: 'video',
-				url: ''
+				images: [ 'flyer.jpg', 'poster.png' ]
 			}
 		]
 	},
@@ -80,7 +168,25 @@ const allProjects = [
 		category: 'illustration',
 		id: 'illustration',
 		title: 'Art & Illustration',
-		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.'
+		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.',
+		elements: [
+			{
+				type: 'flex-grid',
+				items: [
+					{ type: 'image', value: 'Illo-01.jpg' },
+					{ type: 'image', value: 'Illo-02.jpg' },
+					{ type: 'image', value: 'Illo-03.jpg' },
+					{ type: 'image', value: 'Illo-04.jpg' },
+					{ type: 'image', value: 'Illo-05.jpg' },
+					{ type: 'image', value: 'Illo-06.jpg' },
+					{ type: 'image', value: 'Illo-07.jpg' },
+					{ type: 'image', value: 'Illo-08.jpg' },
+					{ type: 'center-image', value: 'Illo-09.jpg' },
+					{ type: 'image', value: 'Illo-10.jpg' },
+					{ type: 'image', value: 'Illo-11.jpg' }
+				]
+			}
+		]
 	}
 ];
 
@@ -358,12 +464,12 @@ const Project = Vue.component( 'bc-detail', {
 								</div>
 							</div>
 							<div class="project-images" v-if="element.type=='images'">
-								<div class="project-image" v-for="image in element.images" :key="image.src">
-									<img :src="'public/images/projects/' + currentProject.id + '/' + image.src">
+								<div class="project-image" v-for="image in element.images" :key="image">
+									<img :src="'public/images/projects/' + currentProject.id + '/' + image">
 								</div>
 							</div>
-							<div class="project-video" v-if="element.type=='video'">
-
+							<div class="project-video" v-if="element.type=='video'" v-bind:style="{ 'background-image': 'url(public/images/projects/' + currentProject.id + '/' + element.screenshot + ')' }">
+								<iframe :src="element.video_url + '?modestbranding=1&showinfo=0&rel=0'" frameborder="0" allowfullscreen></iframe>
 							</div>
 						</div>
 					</div>
