@@ -151,6 +151,34 @@ a:hover {
 	align-items: center;
 }
 
+/* === LOADING SHADE === */
+
+#loading-shade {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100;
+	background: #fff;
+}
+
+@keyframes loading {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.loading-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate( -50%, -50% );
+	width: 150px;
+	height: auto;
+	animation: loading 2s ease 0s infinite;
+}
+
 /* === HEADER === */
 
 #inner-header {
@@ -862,6 +890,31 @@ a:hover {
 }
 
 /* === VUE TRANSITIONS === */
+
+/* LOADING SHADE */
+
+.load-finish-leave-active {
+	transition: opacity .5s ease 1s;
+}
+.load-finish-leave-active .loading-icon {
+	transition: all .5s ease-out;
+	animation: none;
+}
+
+.load-finish-leave {
+	opacity: 1;
+}
+
+.load-finish-leave-to {
+	opacity: 0;
+}
+.load-finish-leave-to .loading-icon {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	transform: translate( 0%, 0% );
+}
+
 
 /* DROP DOWN / UP / DOWN-OUT */
 

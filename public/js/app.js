@@ -687,10 +687,16 @@ var router = new VueRouter({
 var beryl = new Vue({
 	router,
 	data: {
-		transitionName: 'drop-down'
+		transitionName: 'drop-down',
+		loading: true
 	},
 	template: 
 	`<div id="app" v-cloak>
+		<transition name="load-finish">
+			<div id="loading-shade" v-if="loading">
+				<img class="loading-icon" src="public/images/header/bgsc-logo.png" />
+			</div>
+		</transition>
 		<bc-header></bc-header>
 		<div id="main">
 			<transition :name="transitionName">
@@ -698,20 +704,101 @@ var beryl = new Vue({
 			</transition>
 		</div>
 	</div>`,
-	props: ['loading'],
 	beforeMount: function() {
 		if ( this.$route.name == 'project' && ( !currentProject || !currentProject.id ) ) {
 			currentProject = findWhere( allProjects, { id: this.$route.params.id });
 		}
 	},
 	mounted: function() {
+		var $this = this;
 		console.log('Ready');
-		this.loading = false;
+		setTimeout( function() { $this.loading = false; }, 2000);
+		// SCRAPE PROJECTS FOR IMAGES
+		var images = this.compileImages();
+		// PRELOAD IMAGES AND SET LOADED WHEN FINISHED
+		this.preLoadImages( images, function(){
+			// SET ANIMATED ELEMENTS
+			$('.aniview').AniView({
+				animateThreshold: 200,
+			});
+			// REMOVE LOADING SHADE
+			$this.loading = false;
+		});
 	},
 	watch: {
 		'$route' : 'beforeRouteUpdate',
 	},
 	methods: {
+		compileImages: function() {
+			var images = [];
+			// ADD HERO BANNER BERYL AND ILLUSTRATION IMAGES
+			images = images.concat([
+				'public/images/projects/hero-1.png',
+				'public/images/projects/hero-2.png',
+				'public/images/projects/hero-3.png',
+				'public/images/projects/hero-4.png',
+				'public/images/projects/hero-5.png',
+				'public/images/projects/hero-6.png',
+				'public/images/projects/Illustration_1.jpg',
+				'public/images/projects/Illustration_2.jpg',
+				'public/images/projects/Illustration_3.jpg'
+			]);
+			// SCRAPE IMAGES FROM PROJECTS
+			$.each( allProjects, function( index, project ){
+				var basePath = 'public/images/projects/';
+				if ( project.banner )
+					images.push( basePath + project.banner );
+				if ( project.mobile )
+					images.push( basePath + project.mobile );
+				if ( project.elements && project.elements.length ) {
+					var projectPath = basePath + project.id + '/';
+					$.each( project.elements, function( index, element ) {
+						if ( element.type = 'images' && element.images ) {
+							$.each( element.images, function( index, image ) {
+								images.push( projectPath + image );
+							});
+						} else if ( element.type == 'gallery' && element.slides ) {
+							$.each( element.slides, function( index, image ) {
+								images.push( projectPath + image );
+							});
+						} else if ( element.type == 'flex-grid' && element.items ) {
+							$.each( element.items, function( index, item ) {
+								if ( item.type == 'image' )
+									images.push( projectPath + item.value );
+							});
+						}
+					});
+				}
+			});
+			// ADD ABOUT PAGE IMAGES
+			images = images.concat([
+				'public/images/about/profile.jpg',
+				'public/images/about/mineral-1.png',
+				'public/images/about/mineral-2.png',
+				'public/images/about/mineral-3.png',
+			]);
+			return images;
+		},
+		preLoadImages: function( images, callback ) {
+			var $this = this;
+			console.log( images );
+			$.each( images, function(index, image_url) {
+				var image = new Image();
+				image.onload = function(){
+					console.log('Finished', image_url);
+					// IF LAST COMPLETE LOADING
+					if ( !images[index + 1] ) 
+						callback();
+				};
+				// handle failure
+				image.onerror = function(){
+					// IF LAST COMPLETE LOADING
+					if ( !images[index + 1] ) 
+						callback();
+				};
+				image.src = image_url;
+			});
+		},
 		beforeRouteUpdate: function( to, from ) {
 			// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
 			if ( from.name == 'projects' || from.name == 'project' ) {
