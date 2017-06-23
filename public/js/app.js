@@ -261,15 +261,15 @@ const Header = Vue.component( 'bc-header', {
 			socials: [
 				{
 					icon: 'facebook',
-					address: 'http://BERYLS_FACEBOOK',
+					address: 'https://www.facebook.com/berylsays',
 				},
 				{
 					icon: 'instagram',
-					address: 'http://BERYLS_INSTAGRAM',
+					address: 'https://www.instagram.com/berylchvng/',
 				},
 				{
 					icon: 'linkedin',
-					address: 'http://BERYLS_LINKEDIN',
+					address: 'https://www.linkedin.com/in/beryl-chung-91b82b80/',
 				}
 			]
 		};
@@ -349,8 +349,11 @@ const Projects = Vue.component( 'bc-projects', {
 				</div>
 
 				<div id="projects-clients">
-					<div class="client-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
+					<div class="client-item project-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
 						<div class="client-preview">
+							<div class="client-preview-crop">
+								<img :src="'public/images/projects/' + client.banner" />
+							</div>
 							<img class="banner-img" :src="'public/images/projects/' + client.banner" />
 							<div class="mobile-img" v-if="client.mobile">
 								<img :src="'public/images/projects/' + client.mobile" />
@@ -358,16 +361,16 @@ const Projects = Vue.component( 'bc-projects', {
 						</div>
 						<div class="client-body">
 							<h6>{{ client.brand | uppercase }}</h6>
-							<h3>{{ client.title }}</h3>
+							<h3 class="project-title">{{ client.title }}</h3>
 							<p>{{ client.summary }}</p>
 						</div>
 					</div>
 				</div>
 
-				<div class="project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
+				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
 					<div class="project-body">
 						<h6>{{ project.brand | uppercase }}</h6>
-						<h2>{{ project.title }}</h2>
+						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
 					</div>
 					<div class="project-preview">
@@ -376,10 +379,10 @@ const Projects = Vue.component( 'bc-projects', {
 					</div>
 				</div>
 
-				<div class="illustration-item" v-if="projects.illustration" v-on:click="showProject(projects.illustration)">
+				<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">
 					<div class="illustration-body">
-						<h2>{{ projects.illustration.title }}</h2>
-						<h4>{{ projects.illustration.summary }}</h4>
+						<h2 class="project-title">{{ project.title }}</h2>
+						<h4>{{ project.summary }}</h4>
 					</div>
 					<div class="illustration-preview">
 						<img class="illustration-img" v-for="n in 3" :src="'public/images//projects/Illustration_' + n +'.jpg'" />
@@ -531,7 +534,7 @@ const About = Vue.component( 'bc-about', {
 				bio: 'Beryl was born & raised in New York and is an only child, which explains a lot about her personality. She has a BFA from Parsons the New School for Design.',
 				experience: 'Beryl’s experience extends across multiple industries, for a roster of both national and international clients. Clients include: Intercontinental Hotels Group, H&M, Ermenegildo Zegna, Pepsi, UPS, Unilever, Dupont, Brand USA, NFL, Premier League.',
 				features: [
-					{ name: 'Giant Robot NY', link: '' },
+					{ name: 'Giant Robot NY', link: 'https://www.giantrobot.com/blogs/giant-robot-store-and-gr2-news/15827171-grny-dime-bag-3-group-show-7-18-09-8-12-09' },
 					{ name: 'Juxtapoz Magazine', link: 'https://www.juxtapoz.com/news/illustration/beryl-chungs-dedication-to-the-king-of-rock-and-roll/' }
 				]
 			},
