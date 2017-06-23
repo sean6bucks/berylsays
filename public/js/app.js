@@ -781,7 +781,6 @@ var beryl = new Vue({
 		},
 		preLoadImages: function( images, callback ) {
 			var $this = this;
-			console.log( images );
 			$.each( images, function(index, image_url) {
 				var image = new Image();
 				image.onload = function(){
