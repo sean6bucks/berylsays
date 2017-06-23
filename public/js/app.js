@@ -9,6 +9,7 @@ const allProjects = [
 		brand: 'Holiday Inn',
 		title: 'What Would You Do with an Extra Day',
 		summary: 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals.',
+		tags: [ 'Animation', 'Art Direction', 'Digital Activation', 'Illustration', 'Mobile H5' ],
 		banner: 'HolidayInn_preview_banner.jpg',
 		mobile: 'HolidayInn_preview_mobile.png',
 		elements: [
@@ -29,6 +30,7 @@ const allProjects = [
 		brand: 'UPS',
 		title: 'UPS Whitepapers: Think Like a Leader',
 		summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions’ annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
+		tags: [ 'Animation', 'Art Direction', 'Illustration', 'infographic' ],
 		banner: 'UPS_preview_banner.png',
 		elements: [
 			{
@@ -48,6 +50,7 @@ const allProjects = [
 		brand: 'Ogilvy',
 		title: 'Making Data Tracking Simple',
 		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
+		tags: [ 'Animation', 'Art Direction', 'Illustration' ],
 		banner: 'Ogilvy_preview_banner.png',
 		elements: [
 			{
@@ -88,6 +91,7 @@ const allProjects = [
 		brand: 'Pepsi',
 		title: 'Welcome to the New Pepsi Challenge',
 		summary: 'In China, 12 Pepsi Ambassadors from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.',
+		tags: [ 'Art Direction', 'Digital Activation', 'Illustration', 'Print Campaign', 'OOH' ],
 		banner: 'Pepsi_preview_banner.jpg',
 		elements: [
 			{
@@ -151,6 +155,7 @@ const allProjects = [
 		brand: 'Pop Culture Poster Show',
 		title: 'What’s Your All-Time, Desert Island TOP 5?',
 		summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
+		tags: ['Art Exhibition', 'Event Organization', 'Promotional Materials', 'Illustration' ],
 		main_image: 'Top5_main.png',
 		secondary_image: 'Top5_secondary.png',
 		elements: [
@@ -169,6 +174,7 @@ const allProjects = [
 		id: 'illustration',
 		title: 'Art & Illustration',
 		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.',
+		tags: [ 'MisterBaby', 'Pepsi Team', 'HOTB', 'Elvis Alter', 'Elvis Facecards', 'Unraveled: The Line', 'Unraveled: Chance' ],
 		elements: [
 			{
 				type: 'flex-grid',
@@ -224,7 +230,7 @@ const Header = Vue.component( 'bc-header', {
 					<img src="public/images/header/bgsc-logo.png" />
 				</span>
 				<div id="header-nav">
-					<span v-bind:id="item.value + '-nav'" class="nav-item noselect" v-for="item in navigation" v-on:click="navigate( item.value )">
+					<span v-bind:id="item.value + '-nav'" class="nav-item no-select" v-for="item in navigation" v-on:click="navigate( item.value )">
 						<h5>{{ item.name | uppercase }}</h5>
 					</span>
 					<span id="nav-line"></span>
@@ -332,7 +338,7 @@ const Projects = Vue.component( 'bc-projects', {
 	template: 
 		`<div id="projects">
 			<div class="inner-container">
-				<div id="projects-hero" class="hero-banner">
+				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex] }">
 					<div class="hero-text">
 						<h1>Hello, I&apos;m Beryl</h1>
 						<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
@@ -388,10 +394,11 @@ const Projects = Vue.component( 'bc-projects', {
 			if (!projects[category]) projects[category] = [];
 			projects[category].push( project );
 		});
-		console.log( projects );
 		return {
 			projects: projects,
-			currentProject: currentProject
+			currentProject: currentProject,
+			colors: [ '#000000', '#80CBC4', '#4DD0E1', '#FFCDD2', '#EC407A', '#FFCA28' ],
+			backgroundIndex: 0
 		}
 	},
 	mounted: function() {
@@ -412,6 +419,7 @@ const Projects = Vue.component( 'bc-projects', {
 			if ( !slide[0] ) {
 				slide = $('.hero-image').first();
 				slide.addClass('active');
+				$this.backgroundIndex = 0;
 			} else {
 				slide.removeClass('active');
 				
@@ -419,11 +427,12 @@ const Projects = Vue.component( 'bc-projects', {
 				if ( !next[0] ) next = $('.hero-image').first();
 				
 				next.addClass('active');
+				$this.backgroundIndex = $('.hero-image').index(next);
 			}
 			
 			$this.berylLoop = setTimeout(function() {
 				$this.nextSlide();
-			}, 1500);
+			}, 5000);
 		},
 		showProject: function(project) {
 			currentProject = project;
@@ -438,14 +447,18 @@ const Project = Vue.component( 'bc-detail', {
 	router,
 	template:
 		`<div :id="currentProject.id +'-detail'" class="project-detail">
-			<router-link :to="{ name: 'projects' }" class="close-x"></router-link>
 			<div class="project-block">
 				<div class="left-column">
 					<h6>{{ currentProject.brand | uppercase }}</h6>
 					<h2>{{ currentProject.title }}</h2>
-					<p class="h4" v-for="text in currentProject.text">{{ text }}</p>
-					<p class="h4" v-if="!currentProject.text">{{ currentProject.summary }}</p>
-					// TODO: ADD TAGS ON BOTTOM
+					<div class="project-text">
+						<p class="h4" v-for="text in currentProject.text">{{ text }}</p>
+						<p class="h4" v-if="!currentProject.text">{{ currentProject.summary }}</p>
+					</div>
+					<p class="project-tags" v-if="currentProject.tags">{{ currentProject.tags.join( '; ' ) }}</p>
+					<router-link class="back-button" :to="{ name: 'projects' }">
+						<span class="bc bc-arrow-left"></span> Back
+					</router-link>
 				</div>
 				<div class="right-column">
 					<div class="inner-container">
@@ -458,9 +471,10 @@ const Project = Vue.component( 'bc-detail', {
 										</li>
 									</transition-group>
 								</div>
-								<div class="gallery-buttons">
-									<span class="gallery-button" v-on:click="changeSlide('last', element )"></span>
-									<span class="gallery-button" v-on:click="changeSlide('next', element )"></span>
+								<div class="gallery-buttons no-select">
+									<span class="bc bc-arrow-left gallery-button" v-on:click="changeSlide('last', element )"></span>
+									<span class="bc bc-arrow gallery-button" v-on:click="changeSlide('next', element )"></span>
+									<span class="gallery-label">{{ currentSlide + 1 }} of {{ element.slides.length }}</span>
 								</div>
 							</div>
 							<div class="project-images" v-if="element.type=='images'">
@@ -485,7 +499,7 @@ const Project = Vue.component( 'bc-detail', {
 		}
 	},
 	mounted: function() {
-		
+		this.currentSlide = 0;
 	},
 	beforeDestroy: function() {
 
@@ -500,7 +514,6 @@ const Project = Vue.component( 'bc-detail', {
 			if ( this.slideInt < 0 ) this.slideInt = length - 1;
 
 			this.transitionName = dir + '-slide';
-			console.log(this.transitionName);
 			this.currentSlide = this.slideInt % length;
 		}
 	}
@@ -654,7 +667,7 @@ var router = new VueRouter({
 var beryl = new Vue({
 	router,
 	data: {
-		transitionName: 'slide-left'
+		transitionName: 'drop-down'
 	},
 	template: 
 	`<div id="app" v-cloak>
@@ -680,16 +693,15 @@ var beryl = new Vue({
 	},
 	methods: {
 		beforeRouteUpdate: function( to, from ) {
-			// DETERMINE IF NAVIGATION OPENING PROJECT OR PAGE CHANGE
-			if ( to.name == 'project' ) {
-				this.transitionName = 'slide-up';
-			// IF FROM PROJECT USE SLIDE DOWN CLOSE
-			} else if ( from.name == 'project' ) {
-				this.transitionName = 'slide-down';
+			// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
+			if ( from.name == 'projects' || from.name == 'project' ) {
+				this.transitionName = 'drop-down';
+			// IF BACK TO PROJECTS DROP ABOUT & CONTACT UP
+			} else if ( to.name == 'projects' ) {
+				this.transitionName = 'drop-up';
+			// IF FROM/TO ABOUT OR CONTACT DROP OUT AND "to" DOWN
 			} else {
-				if ( to.name == 'projects' ) this.transitionName = 'slide-right';
-				else if ( to.name =='contact' ) this.transitionName = 'slide-left';
-				else this.transitionName = from.name == 'projects' ? 'slide-left' : 'slide-right';
+				this.transitionName = 'drop-down-out'
 			}
 		}
 	}
