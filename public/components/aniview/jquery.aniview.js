@@ -39,6 +39,8 @@
         //and then proceed to fade out the inner contents of each matched element
         $(collection).each(function(index, element) {
             $(element).wrap('<div class="av-container"></div>');
+            $(element).parent().addClass( $(element).attr('class') );
+            $(element).removeClass();
             $(element).css('opacity', 0);
         });
 
@@ -47,7 +49,7 @@
          *
          * @param HTMLDOMElement element the current element to check
          */
-        function EnteringViewport(element) {
+        function EnteringViewport(element, viewport) {
             var elementOffset = $(element).offset();
             var elementTop = elementOffset.top + $(element).scrollTop();
             var viewportBottom = $(window).scrollTop() + $(window).height();
@@ -62,9 +64,10 @@
          */
         function RenderElementsCurrentlyInViewport(collection) {
             $(collection).each(function(index, element) {
+            	var viewport = $(element).closest( '.av-viewport' );
                 var elementParentContainer = $(element).parent('.av-container');
                 var elementChildren = $(element).children('[data-av-animation]');
-                if ( ( $(element).is('[data-av-animation]') || elementChildren.length ) && !$(elementParentContainer).hasClass('av-visible') && EnteringViewport(elementParentContainer)) {
+                if ( ( $(element).is('[data-av-animation]') || elementChildren.length ) && !$(elementParentContainer).hasClass('av-visible') && EnteringViewport(elementParentContainer, viewport)) {
                     $(element).css('opacity', 1);
                     $(elementParentContainer).addClass('av-visible');
                     if ($(element).is('[data-av-animation]'))
@@ -83,6 +86,10 @@
         //from the bottom. default polling time is 20 ms. This can be changed using
         //'scrollPollInterval' from the user visible options
         $(window).scrolled(settings.scrollPollInterval, function() {
+            RenderElementsCurrentlyInViewport(collection);
+        });
+        $('.av-viewport').scrolled(settings.scrollPollInterval, function() {
+        	console.log('Scroll Viewport');
             RenderElementsCurrentlyInViewport(collection);
         });
     };

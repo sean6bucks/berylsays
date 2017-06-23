@@ -1,7 +1,7 @@
 'use strict'
 
 // GLOBAL DATA
-const allProjects = [
+var allProjects = [
 	{
 		// TODO: NEED 2x VERSIONS OF IMAGES
 		category: 'clients',
@@ -60,7 +60,7 @@ const allProjects = [
 			},
 			{
 				type: 'flex-grid',
-				images: [ 
+				items: [ 
 					{
 						type: 'image',
 						value: 'DATA01.gif'
@@ -99,8 +99,18 @@ const allProjects = [
 				images: [ 'Pepsi-01.jpg', 'Pepsi-02.jpg' ]
 			},
 			{
-				type: 'image-grid',
-				images: []
+				type: 'flex-grid',
+				items: [
+					{
+						type: 'image',
+						value: 'Pepsi-03.jpg'
+					},
+					{
+						type: 'html',
+						custom_class: 'center-content',
+						value: 'For social & digital, an interactive mobile-friendly HTML5 page was developed to introduce the 12 unique KOLs and their challenges in a fun, engaging way.<br><br>Fans were encouraged to “like” their favorite celebrity and share on Wechat.'
+					}
+				]
 			},
 			{
 				type: 'images',
@@ -138,12 +148,12 @@ const allProjects = [
 				type: 'flex-grid',
 				items: [
 					{
-						type: 'text',
-						value: ''
+						type: 'html',
+						value: 'Saturday, January 9<br><br><b>Elvis\' 81st Birthday Party Rock Show</b> at The Wanch, Hong Kong<br>Performances from The Boogie Playboys and Miss Cathy, The Queen of Hong Kong Rockabilly<div class="sm-hr"></div>Sunday, January 10<br><br><b>Elvis\' 81st Birthday Party</b> with the International Elvis Presley Fan Club (Hong Kong)<br>Baby ♥s Elvis Pop Up Exhibition<div class="sm-hr"></div>Friday, January 15<br><br><b>BABY ♥s ELVIS</b><br>A narrative Elvis-themed group art show curated by Beryl Chung and Basement6 Food by Umi Bunwich / Sponsored by Fireball / Music by DJ BO'
 					},
 					{
-						type: 'text',
-						value: ''
+						type: 'html',
+						value: 'Saturday, January 16<br><br><b>Elvis\' Family Birthday Party</b> at the Kerry Parkside Courtyard Hotel<br>Live Elvis Impersonation by Curt Mabry of Zmack / Music by DJ BO and the Kerry House Band / Baby ♥s Elvis Pop Up Exhibition<br><br><b>BABY ♥s ELVIS Life Drawing Event</b> at Basement 6 with Shanghai Sketch Club<br>Featuring Burlesque Model, Lulu Galore<br><br><b>Elvis The Pelvis\' Hip Grind Special</b> at INFERNO<br>Performances from Banana Monkey, Chad Romero & The Cadillacs, Parachutes on Fire, & DJ BO Support from Lulu Galore and Baby ♥s Elvis art show<div class="sm-hr"></div>Sunday, January 17<br><br><b>Elvis\' Southern-Fried Brunch</b><br>A Mississippi-style feast by Ruijin Cajun, hosted by District'
 					}
 				]
 			}
@@ -187,7 +197,7 @@ const allProjects = [
 					{ type: 'image', value: 'Illo-06.jpg' },
 					{ type: 'image', value: 'Illo-07.jpg' },
 					{ type: 'image', value: 'Illo-08.jpg' },
-					{ type: 'center-image', value: 'Illo-09.jpg' },
+					{ type: 'image', value: 'Illo-09.jpg', custom_class: 'flex-center' },
 					{ type: 'image', value: 'Illo-10.jpg' },
 					{ type: 'image', value: 'Illo-11.jpg' }
 				]
@@ -221,7 +231,7 @@ Vue.filter('decodeHtml', function (value) {
 
 // COMPONENTS ========
 
-const Header = Vue.component( 'bc-header', {
+var Header = Vue.component( 'bc-header', {
 	router,
 	template: 
 		`<div id="header">
@@ -303,7 +313,7 @@ const Header = Vue.component( 'bc-header', {
 // HOME ==== AKA PROJECTS
 var currentProject = {}
 
-const Home = Vue.component( 'bc-home', {
+var Home = Vue.component( 'bc-home', {
 	data: function(){
 		return {
 			transitionName: 'slide-up',
@@ -333,11 +343,11 @@ const Home = Vue.component( 'bc-home', {
 
 //  PROJECTS
 
-const Projects = Vue.component( 'bc-projects', {
+var Projects = Vue.component( 'bc-projects', {
 	router,
 	template: 
 		`<div id="projects">
-			<div class="inner-container">
+			<div class="inner-container av-viewport">
 				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex] }">
 					<div class="hero-text">
 						<h1>Hello, I&apos;m Beryl</h1>
@@ -349,43 +359,45 @@ const Projects = Vue.component( 'bc-projects', {
 				</div>
 
 				<div id="projects-clients">
-					<div class="client-item project-item" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
-						<div class="client-preview">
-							<div class="client-preview-crop">
-								<img :src="'public/images/projects/' + client.banner" />
+					<div class="client-item project-item aniview" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
+						<div data-av-animation="slideInUp">
+							<div class="client-preview">
+								<div class="client-preview-crop">
+									<img :src="'public/images/projects/' + client.banner" />
+								</div>
+								<img class="banner-img" :src="'public/images/projects/' + client.banner" />
+								<div class="mobile-img" v-if="client.mobile">
+									<img :src="'public/images/projects/' + client.mobile" />
+								</div>
 							</div>
-							<img class="banner-img" :src="'public/images/projects/' + client.banner" />
-							<div class="mobile-img" v-if="client.mobile">
-								<img :src="'public/images/projects/' + client.mobile" />
+							<div class="client-body">
+								<h6>{{ client.brand | uppercase }}</h6>
+								<h3 class="project-title">{{ client.title }}</h3>
+								<p>{{ client.summary }}</p>
 							</div>
-						</div>
-						<div class="client-body">
-							<h6>{{ client.brand | uppercase }}</h6>
-							<h3 class="project-title">{{ client.title }}</h3>
-							<p>{{ client.summary }}</p>
 						</div>
 					</div>
 				</div>
 
 				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
-					<div class="project-body">
+					<div class="project-body center-content aniview" data-av-animation="slideInUp">
 						<h6>{{ project.brand | uppercase }}</h6>
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
 					</div>
-					<div class="project-preview">
-						<img class="main-img" :src="'public/images/projects/' + project.main_image" />
-						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" />
+					<div class="project-preview aniview">
+						<img class="main-img" :src="'public/images/projects/' + project.main_image" data-av-animation="slideInUp" />
+						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" data-av-animation="fadeInUp" />
 					</div>
 				</div>
 
 				<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">
-					<div class="illustration-body">
+					<div class="illustration-body center-content aniview" data-av-animation="slideInUp">
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
 					</div>
-					<div class="illustration-preview">
-						<img class="illustration-img" v-for="n in 3" :src="'public/images//projects/Illustration_' + n +'.jpg'" />
+					<div class="illustration-preview aniview">
+						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'" data-av-animation="slideInUp"/>
 					</div>
 				</div>
 			</div>
@@ -406,8 +418,6 @@ const Projects = Vue.component( 'bc-projects', {
 	},
 	mounted: function() {
 		var $this = this;
-		// TODO: ADD LOADING BEHAVIOR AND SHADE TO DISSAPEAR;
-		this.loading = false;
 		// ON MOUNT > START GEMS SLIDESHOW
 		this.nextSlide();
 	},
@@ -446,7 +456,7 @@ const Projects = Vue.component( 'bc-projects', {
 
 // PROJECTS CHILDREN ( DETAIL PAGE )
 
-const Project = Vue.component( 'bc-detail', {
+var Project = Vue.component( 'bc-detail', {
 	router,
 	template:
 		`<div :id="currentProject.id +'-detail'" class="project-detail">
@@ -480,6 +490,13 @@ const Project = Vue.component( 'bc-detail', {
 									<span class="gallery-label">{{ currentSlide + 1 }} of {{ element.slides.length }}</span>
 								</div>
 							</div>
+							<div class="project-grid" v-if="element.type=='flex-grid'">
+								<div class="flex-item" v-bind:class="item.custom_class" v-for="item in element.items">
+									<img v-if="item.type=='image'" :src="'public/images/projects/' + currentProject.id + '/' + item.value" />
+									<div class="html-block" v-if="item.type=='html'" v-html="item.value"></div>
+								</div>
+							</div>
+
 							<div class="project-images" v-if="element.type=='images'">
 								<div class="project-image" v-for="image in element.images" :key="image">
 									<img :src="'public/images/projects/' + currentProject.id + '/' + image">
@@ -526,7 +543,7 @@ const Project = Vue.component( 'bc-detail', {
 
 // ABOUT 
 
-const About = Vue.component( 'bc-about', {
+var About = Vue.component( 'bc-about', {
 	data: function() {
 		return {
 			personal: {
@@ -577,7 +594,7 @@ const About = Vue.component( 'bc-about', {
 
 // CONTACT
 
-const Contact = Vue.component( 'bc-contact', {
+var Contact = Vue.component( 'bc-contact', {
 	template:
 		`<div id="contact">
 			<div id="contact-block">

@@ -145,6 +145,12 @@ a:hover {
 	overflow: auto;
 }
 
+.center-content {
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+}
+
 /* === HEADER === */
 
 #inner-header {
@@ -291,7 +297,7 @@ a:hover {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: flex-start;
+	align-items: stretch;
 	padding: 0 20px;
 	margin: 0 auto;
 	max-width: 1180px;
@@ -414,12 +420,13 @@ a:hover {
 	top: 0;
 	left: 0;
 	padding: 0 1%;
+	-webkit-animation-delay: .3s;
+	animation-delay: .3s;
 }
 
 .project-body {
 	flex-grow: 4;
 	width: 40%;
-	margin-top: 76px;
 	padding: 0px 1%;
 }
 .event-item:nth-child(odd) .project-body {
@@ -541,13 +548,15 @@ a:hover {
 /* detail elements */
 .project-element {
 	width: 100%;
+}
+.project-element:not(:last-child) {
 	margin-bottom: 40px;
 }
 
 .project-gallery,
 .project-images,
 .project-video,
-.flex-grid {
+.project-grid {
 	width: 100%;
 }
 
@@ -561,9 +570,11 @@ a:hover {
 }
 
 .gallery-slider {
+	position: relative;
 	white-space: nowrap;
 	vertical-align: top;
 	margin-bottom: 20px;
+	overflow: hidden;
 }
 .project-slider ul:after {
 	content: "";
@@ -576,6 +587,7 @@ a:hover {
 	top: 0;
 	left: 0;
 }*/
+
 .gallery-slide,
 .gallery-slide img {
 	width: 100%;
@@ -614,6 +626,7 @@ a:hover {
 	width: 100%;
 	height: auto;
 	vertical-align: top;
+	margin-bottom: 2%;
 }
 
 /* embedded video */
@@ -634,6 +647,46 @@ a:hover {
 	height: 100%;
 }
 
+/* grid elements ( flex grid ) */
+
+.project-grid {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.flex-item {
+	flex: 0 0 49%;
+	margin-bottom: 2%;
+	position: relative;
+}
+.flex-item.flex-center {
+	flex: 0 0 100%;
+	text-align: center;
+}
+
+.flex-item img {
+	width: 100%;
+	height: auto;
+	vertical-align: top;
+}
+.flex-item.flex-center img{
+	width: 50%;
+}
+
+.flex-item .html-block {
+
+}
+
+.sm-hr {
+	width: 20px;
+	height: 1px;
+	border-bottom: 1px solid #000;
+	margin: 20px 0;
+}
 
 /* === ABOUT === */
 
