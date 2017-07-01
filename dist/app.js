@@ -448,7 +448,7 @@ var beryl = new Vue({
 				if (project.elements && project.elements.length) {
 					var projectPath = basePath + project.id + '/';
 					$.each(project.elements, function (index, element) {
-						if (element.type = 'images' && element.images) {
+						if (element.type == 'images' && element.images) {
 							$.each(element.images, function (index, image) {
 								images.push(projectPath + image);
 							});
