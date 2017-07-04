@@ -943,8 +943,6 @@ a:hover {
 /* DROP DOWN / UP / DOWN-OUT */
 
 .drop-down-enter-active,
-.drop-down-out-enter-active,
-.drop-down-out-leave-active,
 .drop-up-leave-active {
 	-webkit-transition: all .3s cubic-bezier(.48,.05,.37,.94);
 	transition: all .3s cubic-bezier(.48,.05,.37,.94);
@@ -953,6 +951,14 @@ a:hover {
 .drop-up-enter-active {
 	-webkit-transition: all .3s ease;
 	transition: all .3s ease;
+}
+
+.drop-down-out-enter-active,
+.drop-down-out-leave-active {
+	position: fixed !important;
+	top: 100px !important;
+	-webkit-transition: transform .3s cubic-bezier(.48,.05,.37,.94);
+	transition: transform .3s cubic-bezier(.48,.05,.37,.94);
 }
 
 .drop-down-enter,

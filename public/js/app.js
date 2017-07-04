@@ -242,7 +242,7 @@ var Header = Vue.component( 'bc-header', {
 				<span id="header-icon" class="bc bc-beryl-icon">
 					<img src="public/images/header/bgsc-logo.png" />
 				</span>
-				<transition :name="'drop-down'">
+				<transition :name="'menu-open'">
 				<div id="header-nav" :class="{ 'nav-open': navOpen }" v-show="!mobileDevice || navOpen">
 					<span v-bind:id="item.value + '-nav'" class="nav-item no-select" v-for="item in navigation" v-on:click="navigate( item.value )">
 						<h5>{{ item.name | uppercase }}</h5>
@@ -303,10 +303,12 @@ var Header = Vue.component( 'bc-header', {
 		var name = this.$route.name == 'project' ? 'projects' : this.$route.name; 
 		var target = $('#'+ name +'-nav')[0];
 		// SET START LOCATION FOR NAV LINE
-		$('#nav-line').css({
-			left: target.offsetLeft,
-			width: target.offsetWidth
-		});
+		if ( !this.mobileDevice ) {
+			$('#nav-line').css({
+				left: target.offsetLeft,
+				width: target.offsetWidth
+			});
+		}
 		$('.nav-item').removeClass( 'active' );
 		$(target).addClass( 'active' );
 	},
@@ -318,10 +320,14 @@ var Header = Vue.component( 'bc-header', {
 			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 			var name = page == 'project' ? 'projects' : this.$route.name; 
 			var target = $('#'+ name +'-nav')[0];
-			$('#nav-line').animate({
-				left: target.offsetLeft,
-				width: target.offsetWidth
-			}, 20, 'easeInExpo');
+			if ( !this.mobileDevice ) {
+				$('#nav-line').animate({
+					left: target.offsetLeft,
+					width: target.offsetWidth
+				}, 20, 'easeInExpo');
+			} else {
+				this.navOpen = false;
+			}
 			$('.nav-item').removeClass( 'active' );
 			$(target).addClass( 'active' );
 		}
@@ -742,7 +748,6 @@ var beryl = new Vue({
 		// DETECT MOBILE DEVICE
 		this.mobileDevice = mobileDevice;
 		if ( width < 700 ) this.mobileDevice = true;
-		console.log( mobileDevice, this.mobileDevice );
 	},
 	mounted: function() {
 		var $this = this;
@@ -834,15 +839,20 @@ var beryl = new Vue({
 			});
 		},
 		beforeRouteUpdate: function( to, from ) {
-			// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
-			if ( from.name == 'projects' || from.name == 'project' ) {
-				this.transitionName = 'drop-down';
-			// IF BACK TO PROJECTS DROP ABOUT & CONTACT UP
-			} else if ( to.name == 'projects' ) {
-				this.transitionName = 'drop-up';
-			// IF FROM/TO ABOUT OR CONTACT DROP OUT AND "to" DOWN
+			// REMOVE TRANSITIONS IF MOBILE MENU
+			if ( this.mobileDevice ) {
+				this.transitionName = '';
 			} else {
-				this.transitionName = 'drop-down-out'
+				// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
+				if ( from.name == 'projects' || from.name == 'project' ) {
+					this.transitionName = 'drop-down';
+				// IF BACK TO PROJECTS DROP ABOUT & CONTACT UP
+				} else if ( to.name == 'projects' ) {
+					this.transitionName = 'drop-up';
+				// IF FROM/TO ABOUT OR CONTACT DROP OUT AND "to" DOWN
+				} else {
+					this.transitionName = 'drop-down-out'
+				}
 			}
 		}
 	}
