@@ -417,9 +417,6 @@ var beryl = new Vue({
 	mounted: function mounted() {
 		var $this = this;
 		console.log('Ready');
-		setTimeout(function () {
-			$this.loading = false;
-		}, 2000);
 		// SCRAPE PROJECTS FOR IMAGES
 		var images = this.compileImages();
 		// PRELOAD IMAGES AND SET LOADED WHEN FINISHED
@@ -473,7 +470,6 @@ var beryl = new Vue({
 			$.each(images, function (index, image_url) {
 				var image = new Image();
 				image.onload = function () {
-					console.log('Finished', image_url);
 					// IF LAST COMPLETE LOADING
 					if (!images[index + 1]) callback();
 				};

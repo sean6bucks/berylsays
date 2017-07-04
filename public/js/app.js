@@ -210,6 +210,9 @@ var allProjects = [
 // =================================
 // TODO: FIND A PLACE TO PUT
 
+var width = ( window.innerWidth > 0 ) ? window.innerWidth : screen.width;
+var mobileDevice = width < 700 ? true : false;
+
 // add custom ease options for jquery without full UI library
 if ($) $.extend( jQuery.easing, {
     easeInExpo: function (x, t, b, c, d) {
@@ -236,10 +239,11 @@ var Header = Vue.component( 'bc-header', {
 	template: 
 		`<div id="header">
 			<div id="inner-header">
-				<span id="header-icon" class="td td-beryl-icon">
+				<span id="header-icon" class="bc bc-beryl-icon">
 					<img src="public/images/header/bgsc-logo.png" />
 				</span>
-				<div id="header-nav">
+				<transition :name="'drop-down'">
+				<div id="header-nav" :class="{ 'nav-open': navOpen }" v-show="!mobileDevice || navOpen">
 					<span v-bind:id="item.value + '-nav'" class="nav-item no-select" v-for="item in navigation" v-on:click="navigate( item.value )">
 						<h5>{{ item.name | uppercase }}</h5>
 					</span>
@@ -250,6 +254,10 @@ var Header = Vue.component( 'bc-header', {
 						</a>
 					</div>
 				</div>
+				</transition>
+				<span class="mobile-header-menu" v-on:click="navOpen = !navOpen">
+					<span class="hamburger"></span>
+				</span>
 			</div>
 		</div>`,
 	data: function() {
@@ -281,10 +289,16 @@ var Header = Vue.component( 'bc-header', {
 					icon: 'linkedin',
 					address: 'https://www.linkedin.com/in/beryl-chung-91b82b80/',
 				}
-			]
+			],
+			navOpen: false,
+			mobileDevice: false
 		};
 	},
+	beforeMount: function() {
+		
+	},
 	mounted: function() {
+		this.mobileDevice = mobileDevice;
 		// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 		var name = this.$route.name == 'project' ? 'projects' : this.$route.name; 
 		var target = $('#'+ name +'-nav')[0];
@@ -293,6 +307,8 @@ var Header = Vue.component( 'bc-header', {
 			left: target.offsetLeft,
 			width: target.offsetWidth
 		});
+		$('.nav-item').removeClass( 'active' );
+		$(target).addClass( 'active' );
 	},
 	methods: {
 		navigate: function( page ) {
@@ -306,6 +322,8 @@ var Header = Vue.component( 'bc-header', {
 				left: target.offsetLeft,
 				width: target.offsetWidth
 			}, 20, 'easeInExpo');
+			$('.nav-item').removeClass( 'active' );
+			$(target).addClass( 'active' );
 		}
 	}
 });
@@ -348,9 +366,9 @@ var Projects = Vue.component( 'bc-projects', {
 	template: 
 		`<div id="projects">
 			<div class="inner-container av-viewport">
-				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex] }">
+				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex], height: mobileHeight }">
 					<div class="hero-text">
-						<h1>Hello, I&apos;m Beryl</h1>
+						<h1>Hello, <br class="sm-br">I&apos;m Beryl</h1>
 						<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
 					</div>
 					<div class="hero-image" v-for="n in 6">
@@ -380,24 +398,24 @@ var Projects = Vue.component( 'bc-projects', {
 				</div>
 
 				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
+					<div class="project-preview aniview">
+						<img class="main-img" :src="'public/images/projects/' + project.main_image" data-av-animation="slideInUp" />
+						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" data-av-animation="fadeInUp" />
+					</div>
 					<div class="project-body center-content aniview" data-av-animation="slideInUp">
 						<h6>{{ project.brand | uppercase }}</h6>
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
 					</div>
-					<div class="project-preview aniview">
-						<img class="main-img" :src="'public/images/projects/' + project.main_image" data-av-animation="slideInUp" />
-						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" data-av-animation="fadeInUp" />
-					</div>
 				</div>
 
 				<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">
+					<div class="illustration-preview aniview">
+						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'" data-av-animation="slideInUp"/>
+					</div>
 					<div class="illustration-body center-content aniview" data-av-animation="slideInUp">
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
-					</div>
-					<div class="illustration-preview aniview">
-						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'" data-av-animation="slideInUp"/>
 					</div>
 				</div>
 			</div>
@@ -413,11 +431,23 @@ var Projects = Vue.component( 'bc-projects', {
 			projects: projects,
 			currentProject: currentProject,
 			colors: [ '#000000', '#80CBC4', '#4DD0E1', '#FFCDD2', '#EC407A', '#FFCA28' ],
-			backgroundIndex: 0
+			backgroundIndex: 0,
+			mobileDevice: false,
+			mobileHeight: null
 		}
+	},
+	beforeMount: function() {
+		
 	},
 	mounted: function() {
 		var $this = this;
+
+		this.mobileDevice = mobileDevice;
+		// SET PROJECTS HEADER HEIGHT FOR MOBILE
+		if ( mobileDevice ) {
+			var height = ( window.innerHeight > 0 ) ? window.innerHeight : screen.height;
+			this.mobileHeight = height - 60 + 'px';
+		}
 		// ON MOUNT > START GEMS SLIDESHOW
 		this.nextSlide();
 	},
@@ -688,7 +718,8 @@ var beryl = new Vue({
 	router,
 	data: {
 		transitionName: 'drop-down',
-		loading: true
+		loading: true,
+		mobileDevice: false,
 	},
 	template: 
 	`<div id="app" v-cloak>
@@ -708,19 +739,24 @@ var beryl = new Vue({
 		if ( this.$route.name == 'project' && ( !currentProject || !currentProject.id ) ) {
 			currentProject = findWhere( allProjects, { id: this.$route.params.id });
 		}
+		// DETECT MOBILE DEVICE
+		this.mobileDevice = mobileDevice;
+		if ( width < 700 ) this.mobileDevice = true;
+		console.log( mobileDevice, this.mobileDevice );
 	},
 	mounted: function() {
 		var $this = this;
 		console.log('Ready');
-		setTimeout( function() { $this.loading = false; }, 2000);
 		// SCRAPE PROJECTS FOR IMAGES
 		var images = this.compileImages();
 		// PRELOAD IMAGES AND SET LOADED WHEN FINISHED
 		this.preLoadImages( images, function(){
 			// SET ANIMATED ELEMENTS
-			$('.aniview').AniView({
-				animateThreshold: 200,
-			});
+			if ( !$this.mobileDevice ) {
+				$('.aniview').AniView({
+					animateThreshold: 200,
+				});
+			}
 			// REMOVE LOADING SHADE
 			$this.loading = false;
 		});
@@ -784,13 +820,12 @@ var beryl = new Vue({
 			$.each( images, function(index, image_url) {
 				var image = new Image();
 				image.onload = function(){
-					console.log('Finished', image_url);
 					// IF LAST COMPLETE LOADING
 					if ( !images[index + 1] ) 
 						callback();
 				};
 				// handle failure
-				image.onerror = function(){
+				image.onerror = function() {
 					// IF LAST COMPLETE LOADING
 					if ( !images[index + 1] ) 
 						callback();
