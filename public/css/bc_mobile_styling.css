@@ -16,9 +16,7 @@
 	.loading-icon {
 		position: absolute;
 		top: 9px;
-		left: 50%;
-		-webkit-transform: translateX( -50% );
-		transform: translateX( -50% );
+		left: 10px;
 		height: 42px;
 		width: auto;
 		animation: loading 2s ease 0s infinite;
@@ -27,7 +25,6 @@
 	/* Header */
 	#header {
 		height: 60px;
-		text-align: center;
 	}
 
 	#inner-header {
@@ -164,7 +161,6 @@
 	.inner-container,
 	.project-detail,
 	.view {
-		padding: 0 10px;
 		overflow-y: scroll; /* has to be scroll, not auto */
   		-webkit-overflow-scrolling: touch;
 	}
@@ -229,6 +225,10 @@
 		display: block;
 		width: 100%;
 		height: auto;
+	}
+
+	.project-detail {
+		padding: 0 10px;
 	}
 
 	.project-detail .left-column,

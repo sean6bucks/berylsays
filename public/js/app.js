@@ -108,7 +108,7 @@ var allProjects = [
 					},
 					{
 						type: 'html',
-						value: 'For social & digital, an interactive mobile-friendly HTML5 page was developed to introduce the 12 unique KOLs and their challenges in a fun, engaging way.<br><br>Fans were encouraged to “like” their favorite celebrity and share on Wechat.'
+						value: '<p class="h4">For social & digital, an interactive mobile-friendly HTML5 page was developed to introduce the 12 unique KOLs and their challenges in a fun, engaging way.<br><br>Fans were encouraged to “like” their favorite celebrity and share on Wechat.</p>'
 					}
 				]
 			},
@@ -149,11 +149,11 @@ var allProjects = [
 				items: [
 					{
 						type: 'html',
-						value: 'Saturday, January 9<br><br><b>Elvis\' 81st Birthday Party Rock Show</b> at The Wanch, Hong Kong<br>Performances from The Boogie Playboys and Miss Cathy, The Queen of Hong Kong Rockabilly<div class="sm-hr"></div>Sunday, January 10<br><br><b>Elvis\' 81st Birthday Party</b> with the International Elvis Presley Fan Club (Hong Kong)<br>Baby ♥s Elvis Pop Up Exhibition<div class="sm-hr"></div>Friday, January 15<br><br><b>BABY ♥s ELVIS</b><br>A narrative Elvis-themed group art show curated by Beryl Chung and Basement6 Food by Umi Bunwich / Sponsored by Fireball / Music by DJ BO'
+						value: '<p class="h4">Saturday, January 9</p><p class="h4"><b>Elvis\' 81st Birthday Party Rock Show</b> at The Wanch, Hong Kong</br>Performances from The Boogie Playboys and Miss Cathy, The Queen of Hong Kong Rockabilly<span class="sm-hr"></span>Sunday, January 10</p><p class="h4"><b>Elvis\' 81st Birthday Party</b> with the International Elvis Presley Fan Club (Hong Kong)<br>Baby ♥s Elvis Pop Up Exhibition<span class="sm-hr"></span>Friday, January 15</p><p class="h4"><b>BABY ♥s ELVIS</b></br>A narrative Elvis-themed group art show curated by Beryl Chung and Basement6 Food by Umi Bunwich / Sponsored by Fireball / Music by DJ BO</p>'
 					},
 					{
 						type: 'html',
-						value: 'Saturday, January 16<br><br><b>Elvis\' Family Birthday Party</b> at the Kerry Parkside Courtyard Hotel<br>Live Elvis Impersonation by Curt Mabry of Zmack / Music by DJ BO and the Kerry House Band / Baby ♥s Elvis Pop Up Exhibition<br><br><b>BABY ♥s ELVIS Life Drawing Event</b> at Basement 6 with Shanghai Sketch Club<br>Featuring Burlesque Model, Lulu Galore<br><br><b>Elvis The Pelvis\' Hip Grind Special</b> at INFERNO<br>Performances from Banana Monkey, Chad Romero & The Cadillacs, Parachutes on Fire, & DJ BO Support from Lulu Galore and Baby ♥s Elvis art show<div class="sm-hr"></div>Sunday, January 17<br><br><b>Elvis\' Southern-Fried Brunch</b><br>A Mississippi-style feast by Ruijin Cajun, hosted by District'
+						value: '<p class="h4">Saturday, January 16</p><p class="h4"><b>Elvis\' Family Birthday Party</b> at the Kerry Parkside Courtyard Hotel<br>Live Elvis Impersonation by Curt Mabry of Zmack / Music by DJ BO and the Kerry House Band / Baby ♥s Elvis Pop Up Exhibition</p><p class="h4"><b>BABY ♥s ELVIS Life Drawing Event</b> at Basement 6 with Shanghai Sketch Club<br>Featuring Burlesque Model, Lulu Galore</p><p class="h4"><b>Elvis The Pelvis\' Hip Grind Special</b> at INFERNO<br>Performances from Banana Monkey, Chad Romero & The Cadillacs, Parachutes on Fire, & DJ BO Support from Lulu Galore and Baby ♥s Elvis art show<span class="sm-hr"></span>Sunday, January 17</p><p class="h4"><b>Elvis\' Southern-Fried Brunch</b><br>A Mississippi-style feast by Ruijin Cajun, hosted by District</p>'
 					}
 				]
 			}

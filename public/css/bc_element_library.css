@@ -396,11 +396,11 @@ a:hover {
 }
 
 .client-item:hover .client-preview-crop {
-	clip-path: inset(10px);
+	clip-path: inset(2px);
 }
 .client-item:hover .client-preview-crop img {
-	-webkit-transform: scale(1.2);
-	transform: scale(1.2);
+	-webkit-transform: scale(1.05);
+	transform: scale(1.05);
 }
 
 .client-preview-crop img,
@@ -423,8 +423,8 @@ a:hover {
 	transition: all .2s ease;
 }
 .client-item:hover .mobile-img {
-	-webkit-transform: scale(1.1);
-	transform: scale(1.1);
+	-webkit-transform: scale(1.05);
+	transform: scale(1.05);
 }
 .client-preview .mobile-img img {
 	max-width: 200px;
