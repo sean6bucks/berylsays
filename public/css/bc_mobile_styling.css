@@ -164,6 +164,7 @@
 	.inner-container,
 	.project-detail,
 	.view {
+		padding: 0 10px;
 		overflow-y: scroll; /* has to be scroll, not auto */
   		-webkit-overflow-scrolling: touch;
 	}

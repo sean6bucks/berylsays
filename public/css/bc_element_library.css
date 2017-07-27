@@ -51,6 +51,12 @@ li {
 	overflow: auto;
 }
 
+.footer-block {
+	text-align: center;
+	margin-top: 20px;
+	padding: 10px 5px;
+}
+
 
 /* === TYPOGRAPHY === */
 
@@ -149,7 +155,7 @@ a:hover {
 .center-content {
 	display: -webkit-flex;
 	display: flex;
-	align-items: center;
+	align-items: center !important;
 }
 
 .sm-br {
@@ -206,7 +212,8 @@ a:hover {
 	display: inline-block;
 	position: relative;
 	vertical-align: top;
-	width: 50%;
+	text-align: right;
+	width: calc( 100% - 110px );
 	float: right;
 	margin: 11px 0;
 	height: 20px;
@@ -232,7 +239,6 @@ a:hover {
 }
 
 #header-social {
-	float: right;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -342,7 +348,7 @@ a:hover {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: stretch;
+	align-items: center;
 	padding: 0 20px;
 	margin: 0 auto;
 	max-width: 1180px;
@@ -920,10 +926,8 @@ a:hover {
 	color: #c2912e;
 }
 
-.form-errors {
-	width: 100%;
-	text-align: center;
-	color: red;
+.form-error {
+	color: #D8000D;
 }
 
 .input-group.has-error input,

@@ -100,6 +100,7 @@ var allProjects = [
 			},
 			{
 				type: 'flex-grid',
+				custom_class: 'center-content',
 				items: [
 					{
 						type: 'image',
@@ -107,7 +108,6 @@ var allProjects = [
 					},
 					{
 						type: 'html',
-						custom_class: 'center-content',
 						value: 'For social & digital, an interactive mobile-friendly HTML5 page was developed to introduce the 12 unique KOLs and their challenges in a fun, engaging way.<br><br>Fans were encouraged to “like” their favorite celebrity and share on Wechat.'
 					}
 				]
@@ -298,6 +298,7 @@ var Header = Vue.component( 'bc-header', {
 		
 	},
 	mounted: function() {
+		var $this = this;
 		this.mobileDevice = mobileDevice;
 		// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 		var name = this.$route.name == 'project' ? 'projects' : this.$route.name; 
@@ -307,10 +308,21 @@ var Header = Vue.component( 'bc-header', {
 			$('#nav-line').css({
 				left: target.offsetLeft,
 				width: target.offsetWidth
-			});
+			}, 0);
 		}
 		$('.nav-item').removeClass( 'active' );
 		$(target).addClass( 'active' );
+
+		$( window ).resize( function( target ) {
+			var name = $this.$route.name == 'project' ? 'projects' : $this.$route.name; 
+			var target = $('#'+ name +'-nav')[0];
+			if ( !$this.mobileDevice ) {
+				$('#nav-line').css({
+					left: target.offsetLeft,
+					width: target.offsetWidth
+				}, 0);
+			}
+		});
 	},
 	methods: {
 		navigate: function( page ) {
@@ -371,7 +383,7 @@ var Projects = Vue.component( 'bc-projects', {
 	router,
 	template: 
 		`<div id="projects">
-			<div class="inner-container av-viewport">
+			<div class="inner-container">
 				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex], height: mobileHeight }">
 					<div class="hero-text">
 						<h1>Hello, <br class="sm-br">I&apos;m Beryl</h1>
@@ -383,32 +395,30 @@ var Projects = Vue.component( 'bc-projects', {
 				</div>
 
 				<div id="projects-clients">
-					<div class="client-item project-item aniview" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">
-						<div data-av-animation="slideInUp">
-							<div class="client-preview">
-								<div class="client-preview-crop">
-									<img :src="'public/images/projects/' + client.banner" />
-								</div>
-								<img class="banner-img" :src="'public/images/projects/' + client.banner" />
-								<div class="mobile-img" v-if="client.mobile">
-									<img :src="'public/images/projects/' + client.mobile" />
-								</div>
+					<div class="client-item project-item" v-for="( client, index ) in projects.clients" :key="client.id" v-on:click="showProject(client)">
+						<div class="client-preview">
+							<div class="client-preview-crop">
+								<img :src="'public/images/projects/' + client.banner" />
 							</div>
-							<div class="client-body">
-								<h6>{{ client.brand | uppercase }}</h6>
-								<h3 class="project-title">{{ client.title }}</h3>
-								<p>{{ client.summary }}</p>
+							<img class="banner-img" :src="'public/images/projects/' + client.banner" />
+							<div class="mobile-img" v-if="client.mobile">
+								<img :src="'public/images/projects/' + client.mobile" />
 							</div>
+						</div>
+						<div class="client-body">
+							<h6>{{ client.brand | uppercase }}</h6>
+							<h3 class="project-title">{{ client.title }}</h3>
+							<p>{{ client.summary }}</p>
 						</div>
 					</div>
 				</div>
 
 				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
-					<div class="project-preview aniview">
-						<img class="main-img" :src="'public/images/projects/' + project.main_image" data-av-animation="slideInUp" />
-						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image" data-av-animation="fadeInUp" />
+					<div class="project-preview">
+						<img class="main-img" :src="'public/images/projects/' + project.main_image"/>
+						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image"/>
 					</div>
-					<div class="project-body center-content aniview" data-av-animation="slideInUp">
+					<div class="project-body">
 						<h6>{{ project.brand | uppercase }}</h6>
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
@@ -416,13 +426,16 @@ var Projects = Vue.component( 'bc-projects', {
 				</div>
 
 				<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">
-					<div class="illustration-preview aniview">
-						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'" data-av-animation="slideInUp"/>
+					<div class="illustration-preview">
+						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'"/>
 					</div>
-					<div class="illustration-body center-content aniview" data-av-animation="slideInUp">
+					<div class="illustration-body">
 						<h2 class="project-title">{{ project.title }}</h2>
 						<h4>{{ project.summary }}</h4>
 					</div>
+				</div>
+				<div class="footer-block">
+					<p>Beryl Chung 2017 &copy;</p>
 				</div>
 			</div>
 		</div>`,
@@ -526,7 +539,7 @@ var Project = Vue.component( 'bc-detail', {
 									<span class="gallery-label">{{ currentSlide + 1 }} of {{ element.slides.length }}</span>
 								</div>
 							</div>
-							<div class="project-grid" v-if="element.type=='flex-grid'">
+							<div class="project-grid" v-bind:class="element.custom_class" v-if="element.type=='flex-grid'">
 								<div class="flex-item" v-bind:class="item.custom_class" v-for="item in element.items">
 									<img v-if="item.type=='image'" :src="'public/images/projects/' + currentProject.id + '/' + item.value" />
 									<div class="html-block" v-if="item.type=='html'" v-html="item.value"></div>
@@ -541,6 +554,9 @@ var Project = Vue.component( 'bc-detail', {
 							<div class="project-video" v-if="element.type=='video'" v-bind:style="{ 'background-image': 'url(public/images/projects/' + currentProject.id + '/' + element.screenshot + ')' }">
 								<iframe :src="element.video_url + '?modestbranding=1&showinfo=0&rel=0'" frameborder="0" allowfullscreen></iframe>
 							</div>
+						</div>
+						<div class="footer-block">
+							<p>Beryl Chung 2017 &copy;</p>
 						</div>
 					</div>
 				</div>
@@ -625,6 +641,9 @@ var About = Vue.component( 'bc-about', {
 					<p>{{ beryl.subtext }}</p>
 				</div>
 			</div>
+			<div class="footer-block">
+				<p>Beryl Chung 2017 &copy;</p>
+			</div>
 		</div>`,
 });
 
@@ -643,7 +662,7 @@ var Contact = Vue.component( 'bc-contact', {
 					<form id="feedbackForm">
 						<p class="group-label">Name</p>
 						<div class="form-group">
-							<div class="input-group half-width" v-bind:class="{ 'has-error': formErrors['First Name'] }">
+							<div class="input-group half-width" v-bind:class="{ 'has-error': formErrors.Name }">
 								<input id="formFirstName" name="First Name"/>
 								<p>First Name</p>
 							</div>
@@ -654,19 +673,20 @@ var Contact = Vue.component( 'bc-contact', {
 						</div>
 						<p class="group-label">Email Address</p>
 						<div class="form-group">
-							<div class="input-group" v-bind:class="{ 'has-error': formErrors['formmail_mail_email'] }">
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.formmail_mail_email }">
 								<input id="formEmail" name="formmail_mail_email" />
+								<p class="form-error" v-show="emailError">{{ emailError }}</p>
 							</div>
 						</div>
 						<p class="group-label">Subject</p>
 						<div class="form-group">
-							<div class="input-group" :class="{ 'has-error': formErrors['Subject'] }">
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.Subject }">
 								<input id="formSubject" name="Subject"/>
 							</div>
 						</div>
 						<p class="group-label">Message</p>
 						<div class="form-group">
-							<div class="input-group" :class="{ 'has-error': formErrors['Message'] }">
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.Message }">
 								<textarea id="formMessage" name="Message"></textarea>
 							</div>
 						</div>
@@ -674,15 +694,19 @@ var Contact = Vue.component( 'bc-contact', {
 					<button class="submit-btn" v-on:click="submitForm();">SUBMIT</button>
 				</div>
 			</div>
+			<div class="footer-block">
+				<p>Beryl Chung 2017 &copy;</p>
+			</div>
 		</div>`,
 	data: function() {
 		return {
 			formErrors: {
-				"First Name": false,
+				"Name": false,
 				"formmail_mail_email": false,
 				"Subject": false,
 				"Message": false
-			}
+			},
+			emailError: ''
 		};
 	},
 	methods: {
@@ -690,20 +714,25 @@ var Contact = Vue.component( 'bc-contact', {
 			var $this = this;
 
 			function checkFields(form) {
-				var inputFields = ["First Name" , "formmail_mail_email", "Subject", "Message"];
-				var counter;
-				var name;
+
+				var inputFields = [ "Name", "formmail_mail_email", "Subject", "Message" ];
 				var msg = "Please complete the following fields:\n";
 				var error = false;
-				inputFields.forEach( function(name) {
+				inputFields.forEach( function( name ) {
 					if ( form[name].length == 0 ) {
 						$this.formErrors[name] = true;
+						console.log( $this.formErrors, name );
 						error = true;
 					} else {
-						if ( name == "formmail_mail_email" && emailCheck( form.formmail_mail_email ) ) {
-							$this.formErrors.formmail_mail_email = true;
-							error = true;
+						if ( name == "formmail_mail_email" ) {
+							if ( emailCheck( form.formmail_mail_email ) ) {
+								$this.formErrors.formmail_mail_email = true;
+								error = true;
+							} else {
+								$this.formErrors.formmail_mail_email = false;
+							}
 						} else {
+							console.log( $this.formErrors, name );
 							$this.formErrors[name] = false;
 						}
 					}
@@ -712,7 +741,10 @@ var Contact = Vue.component( 'bc-contact', {
 				if ( error ) {
 					return false;
 				} else {
-					$this.formErrors = {};
+					inputFields.forEach( function( name ) {
+						$this.formErrors[name] = false;
+					});
+					console.log( $this.formErrors, name );
 				}
 
 				if ( form.formmail_mail_email.length > 0 ) {
@@ -721,29 +753,33 @@ var Contact = Vue.component( 'bc-contact', {
 				} else {
 					return true;
 				}
-			}
+
+			};
 
 			function emailCheck(emailStr) {
 				var emailPat=/^(.+)@(.+)$/;
 				var matchArray=emailStr.match(emailPat);
 
 				if ( matchArray==null ) {
-					$this.formErrors = "Email address seems incorrect (check @ and .'s)";
+					$this.emailError = "Email address seems incorrect (check @ and .'s)";
 					return true;
 				} else {
-					$this.formErrors = '';
+					$this.emailError = "";
 				}
 
 		 		return false;
-			}
+			};
 
 			var form = {
-				"First Name": $('#formFirstName').val(),
-				"Last Name": $('#formLastName').val(),
+				"Name": $('#formFirstName').val(),
 				formmail_mail_email: $('#formEmail').val(),
 				"Subject": $('#formSubject').val(),
 				"Message": $('#formMessage').val()
 			};
+			// ONLY ADD LAST IF FIRST AVAIL
+			if ( $('#formFirstName').val() && $('#formLastName').val() ) {
+				form.Name += ' ' + $('#formLastName').val();
+			}
 
 			var valid_form = checkFields(form);
 
@@ -766,6 +802,8 @@ var Contact = Vue.component( 'bc-contact', {
 						console.log( 'Error', response );
 					}
 				);
+			} else {
+				console.log( $this.formErrors );
 			}
 		}
 	}
