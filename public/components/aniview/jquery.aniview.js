@@ -89,7 +89,6 @@
             RenderElementsCurrentlyInViewport(collection);
         });
         $('.av-viewport').scrolled(settings.scrollPollInterval, function() {
-        	console.log('Scroll Viewport');
             RenderElementsCurrentlyInViewport(collection);
         });
     };

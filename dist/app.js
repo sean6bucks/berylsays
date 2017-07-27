@@ -155,6 +155,9 @@ var allProjects = [{
 // =================================
 // TODO: FIND A PLACE TO PUT
 
+var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+var mobileDevice = width < 700 ? true : false;
+
 // add custom ease options for jquery without full UI library
 if ($) $.extend(jQuery.easing, {
 	easeInExpo: function easeInExpo(x, t, b, c, d) {
@@ -178,7 +181,7 @@ Vue.filter('decodeHtml', function (value) {
 
 var Header = Vue.component('bc-header', {
 	router: router,
-	template: '<div id="header">\n\t\t\t<div id="inner-header">\n\t\t\t\t<span id="header-icon" class="td td-beryl-icon">\n\t\t\t\t\t<img src="public/images/header/bgsc-logo.png" />\n\t\t\t\t</span>\n\t\t\t\t<div id="header-nav">\n\t\t\t\t\t<span v-bind:id="item.value + \'-nav\'" class="nav-item no-select" v-for="item in navigation" v-on:click="navigate( item.value )">\n\t\t\t\t\t\t<h5>{{ item.name | uppercase }}</h5>\n\t\t\t\t\t</span>\n\t\t\t\t\t<span id="nav-line"></span>\n\t\t\t\t\t<div id="header-social">\n\t\t\t\t\t\t<a span class="social-item" v-for="item in socials" v-bind:href="item.address" target="_blank">\n\t\t\t\t\t\t\t<span class="bc" v-bind:class="\'bc-\' + item.icon"></span> \n\t\t\t\t\t\t</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>',
+	template: '<div id="header">\n\t\t\t<div id="inner-header">\n\t\t\t\t<span id="header-icon" class="bc bc-beryl-icon">\n\t\t\t\t\t<img src="public/images/header/bgsc-logo.png" />\n\t\t\t\t</span>\n\t\t\t\t<transition :name="\'menu-open\'">\n\t\t\t\t<div id="header-nav" :class="{ \'nav-open\': navOpen }" v-show="!mobileDevice || navOpen">\n\t\t\t\t\t<span v-bind:id="item.value + \'-nav\'" class="nav-item no-select" v-for="item in navigation" v-on:click="navigate( item.value )">\n\t\t\t\t\t\t<h5>{{ item.name | uppercase }}</h5>\n\t\t\t\t\t</span>\n\t\t\t\t\t<span id="nav-line"></span>\n\t\t\t\t\t<div id="header-social">\n\t\t\t\t\t\t<a span class="social-item" v-for="item in socials" v-bind:href="item.address" target="_blank">\n\t\t\t\t\t\t\t<span class="bc" v-bind:class="\'bc-\' + item.icon"></span> \n\t\t\t\t\t\t</a>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t</transition>\n\t\t\t\t<span class="mobile-header-menu" v-on:click="navOpen = !navOpen" v-bind:class="{ \'close-x\': navOpen }">\n\t\t\t\t\t<span class="hamburger"></span>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t</div>',
 	data: function data() {
 		return {
 			navigation: [{
@@ -200,18 +203,26 @@ var Header = Vue.component('bc-header', {
 			}, {
 				icon: 'linkedin',
 				address: 'https://www.linkedin.com/in/beryl-chung-91b82b80/'
-			}]
+			}],
+			navOpen: false,
+			mobileDevice: false
 		};
 	},
+	beforeMount: function beforeMount() {},
 	mounted: function mounted() {
+		this.mobileDevice = mobileDevice;
 		// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 		var name = this.$route.name == 'project' ? 'projects' : this.$route.name;
 		var target = $('#' + name + '-nav')[0];
 		// SET START LOCATION FOR NAV LINE
-		$('#nav-line').css({
-			left: target.offsetLeft,
-			width: target.offsetWidth
-		});
+		if (!this.mobileDevice) {
+			$('#nav-line').css({
+				left: target.offsetLeft,
+				width: target.offsetWidth
+			});
+		}
+		$('.nav-item').removeClass('active');
+		$(target).addClass('active');
 	},
 	methods: {
 		navigate: function navigate(page) {
@@ -221,10 +232,16 @@ var Header = Vue.component('bc-header', {
 			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 			var name = page == 'project' ? 'projects' : this.$route.name;
 			var target = $('#' + name + '-nav')[0];
-			$('#nav-line').animate({
-				left: target.offsetLeft,
-				width: target.offsetWidth
-			}, 20, 'easeInExpo');
+			if (!this.mobileDevice) {
+				$('#nav-line').animate({
+					left: target.offsetLeft,
+					width: target.offsetWidth
+				}, 20, 'easeInExpo');
+			} else {
+				this.navOpen = false;
+			}
+			$('.nav-item').removeClass('active');
+			$(target).addClass('active');
 		}
 	}
 });
@@ -258,7 +275,7 @@ var Home = Vue.component('bc-home', {
 
 var Projects = Vue.component('bc-projects', {
 	router: router,
-	template: '<div id="projects">\n\t\t\t<div class="inner-container av-viewport">\n\t\t\t\t<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex] }">\n\t\t\t\t\t<div class="hero-text">\n\t\t\t\t\t\t<h1>Hello, I&apos;m Beryl</h1>\n\t\t\t\t\t\t<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="hero-image" v-for="n in 6">\n\t\t\t\t\t\t<img :src="\'public/images/projects/hero-\' + n + \'.png\'" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div id="projects-clients">\n\t\t\t\t\t<div class="client-item project-item aniview" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">\n\t\t\t\t\t\t<div data-av-animation="slideInUp">\n\t\t\t\t\t\t\t<div class="client-preview">\n\t\t\t\t\t\t\t\t<div class="client-preview-crop">\n\t\t\t\t\t\t\t\t\t<img :src="\'public/images/projects/\' + client.banner" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<img class="banner-img" :src="\'public/images/projects/\' + client.banner" />\n\t\t\t\t\t\t\t\t<div class="mobile-img" v-if="client.mobile">\n\t\t\t\t\t\t\t\t\t<img :src="\'public/images/projects/\' + client.mobile" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="client-body">\n\t\t\t\t\t\t\t\t<h6>{{ client.brand | uppercase }}</h6>\n\t\t\t\t\t\t\t\t<h3 class="project-title">{{ client.title }}</h3>\n\t\t\t\t\t\t\t\t<p>{{ client.summary }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">\n\t\t\t\t\t<div class="project-body center-content aniview" data-av-animation="slideInUp">\n\t\t\t\t\t\t<h6>{{ project.brand | uppercase }}</h6>\n\t\t\t\t\t\t<h2 class="project-title">{{ project.title }}</h2>\n\t\t\t\t\t\t<h4>{{ project.summary }}</h4>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="project-preview aniview">\n\t\t\t\t\t\t<img class="main-img" :src="\'public/images/projects/\' + project.main_image" data-av-animation="slideInUp" />\n\t\t\t\t\t\t<img class="secondary-img" :src="\'public/images/projects/\' + project.secondary_image" data-av-animation="fadeInUp" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">\n\t\t\t\t\t<div class="illustration-body center-content aniview" data-av-animation="slideInUp">\n\t\t\t\t\t\t<h2 class="project-title">{{ project.title }}</h2>\n\t\t\t\t\t\t<h4>{{ project.summary }}</h4>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="illustration-preview aniview">\n\t\t\t\t\t\t<img class="illustration-img" v-for="n in 3" :src="\'public/images/projects/Illustration_\' + n +\'.jpg\'" data-av-animation="slideInUp"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>',
+	template: '<div id="projects">\n\t\t\t<div class="inner-container av-viewport">\n\t\t\t\t<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex], height: mobileHeight }">\n\t\t\t\t\t<div class="hero-text">\n\t\t\t\t\t\t<h1>Hello, <br class="sm-br">I&apos;m Beryl</h1>\n\t\t\t\t\t\t<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="hero-image" v-for="n in 6">\n\t\t\t\t\t\t<img :src="\'public/images/projects/hero-\' + n + \'.png\'" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div id="projects-clients">\n\t\t\t\t\t<div class="client-item project-item aniview" v-for="client in projects.clients" :key="client.id" v-on:click="showProject(client)">\n\t\t\t\t\t\t<div data-av-animation="slideInUp">\n\t\t\t\t\t\t\t<div class="client-preview">\n\t\t\t\t\t\t\t\t<div class="client-preview-crop">\n\t\t\t\t\t\t\t\t\t<img :src="\'public/images/projects/\' + client.banner" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<img class="banner-img" :src="\'public/images/projects/\' + client.banner" />\n\t\t\t\t\t\t\t\t<div class="mobile-img" v-if="client.mobile">\n\t\t\t\t\t\t\t\t\t<img :src="\'public/images/projects/\' + client.mobile" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="client-body">\n\t\t\t\t\t\t\t\t<h6>{{ client.brand | uppercase }}</h6>\n\t\t\t\t\t\t\t\t<h3 class="project-title">{{ client.title }}</h3>\n\t\t\t\t\t\t\t\t<p>{{ client.summary }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">\n\t\t\t\t\t<div class="project-preview aniview">\n\t\t\t\t\t\t<img class="main-img" :src="\'public/images/projects/\' + project.main_image" data-av-animation="slideInUp" />\n\t\t\t\t\t\t<img class="secondary-img" :src="\'public/images/projects/\' + project.secondary_image" data-av-animation="fadeInUp" />\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="project-body center-content aniview" data-av-animation="slideInUp">\n\t\t\t\t\t\t<h6>{{ project.brand | uppercase }}</h6>\n\t\t\t\t\t\t<h2 class="project-title">{{ project.title }}</h2>\n\t\t\t\t\t\t<h4>{{ project.summary }}</h4>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">\n\t\t\t\t\t<div class="illustration-preview aniview">\n\t\t\t\t\t\t<img class="illustration-img" v-for="n in 3" :src="\'public/images/projects/Illustration_\' + n +\'.jpg\'" data-av-animation="slideInUp"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="illustration-body center-content aniview" data-av-animation="slideInUp">\n\t\t\t\t\t\t<h2 class="project-title">{{ project.title }}</h2>\n\t\t\t\t\t\t<h4>{{ project.summary }}</h4>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>',
 	data: function data() {
 		var projects = {};
 		$.each(allProjects, function (index, project) {
@@ -270,11 +287,21 @@ var Projects = Vue.component('bc-projects', {
 			projects: projects,
 			currentProject: currentProject,
 			colors: ['#000000', '#80CBC4', '#4DD0E1', '#FFCDD2', '#EC407A', '#FFCA28'],
-			backgroundIndex: 0
+			backgroundIndex: 0,
+			mobileDevice: false,
+			mobileHeight: null
 		};
 	},
+	beforeMount: function beforeMount() {},
 	mounted: function mounted() {
 		var $this = this;
+
+		this.mobileDevice = mobileDevice;
+		// SET PROJECTS HEADER HEIGHT FOR MOBILE
+		if (mobileDevice) {
+			var height = window.innerHeight > 0 ? window.innerHeight : screen.height;
+			this.mobileHeight = height - 60 + 'px';
+		}
 		// ON MOUNT > START GEMS SLIDESHOW
 		this.nextSlide();
 	},
@@ -363,9 +390,97 @@ var About = Vue.component('bc-about', {
 });
 
 // CONTACT
+// action="https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl" method="post"
 
 var Contact = Vue.component('bc-contact', {
-	template: '<div id="contact">\n\t\t\t<div id="contact-block">\n\t\t\t\t<div class="contact-info">\n\t\t\t\t\t<p>Get in touch using this<br>form or email</p>\n\t\t\t\t\t<a class="email-link" href="mailto:hi@berylchung.com?Subject=Hi">hi@berylchung.com</a>\n\t\t\t\t</div>\n\t\t\t\t<div class="contact-form">\n\t\t\t\t\t<form>\n\t\t\t\t\t\t<p class="group-label">Name</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group half-width">\n\t\t\t\t\t\t\t\t<input />\n\t\t\t\t\t\t\t\t<p>First Name</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="input-group half-width">\n\t\t\t\t\t\t\t\t<input />\n\t\t\t\t\t\t\t\t<p>Last Name</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Email Address</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group">\n\t\t\t\t\t\t\t\t<input />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Subject</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group">\n\t\t\t\t\t\t\t\t<input />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Message</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group">\n\t\t\t\t\t\t\t\t<textarea></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<button class="submit-btn" type="submit">SUBMIT</button>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>'
+	template: '<div id="contact">\n\t\t\t<div id="contact-block">\n\t\t\t\t<div class="contact-info">\n\t\t\t\t\t<p>Get in touch using this<br>form or email</p>\n\t\t\t\t\t<a class="email-link" href="mailto:hi@berylchung.com?Subject=Hi">hi@berylchung.com</a>\n\t\t\t\t</div>\n\t\t\t\t<div class="contact-form">\n\t\t\t\t\t<form id="feedbackForm">\n\t\t\t\t\t\t<p class="group-label">Name</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group half-width" v-bind:class="{ \'has-error\': formErrors[\'First Name\'] }">\n\t\t\t\t\t\t\t\t<input id="formFirstName" name="First Name"/>\n\t\t\t\t\t\t\t\t<p>First Name</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="input-group half-width">\n\t\t\t\t\t\t\t\t<input id="formLastName" name="Last Name"/>\n\t\t\t\t\t\t\t\t<p>Last Name</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Email Address</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group" v-bind:class="{ \'has-error\': formErrors[\'formmail_mail_email\'] }">\n\t\t\t\t\t\t\t\t<input id="formEmail" name="formmail_mail_email" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Subject</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group" :class="{ \'has-error\': formErrors[\'Subject\'] }">\n\t\t\t\t\t\t\t\t<input id="formSubject" name="Subject"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class="group-label">Message</p>\n\t\t\t\t\t\t<div class="form-group">\n\t\t\t\t\t\t\t<div class="input-group" :class="{ \'has-error\': formErrors[\'Message\'] }">\n\t\t\t\t\t\t\t\t<textarea id="formMessage" name="Message"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t\t<button class="submit-btn" v-on:click="submitForm();">SUBMIT</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>',
+	data: function data() {
+		return {
+			formErrors: {
+				"First Name": false,
+				"formmail_mail_email": false,
+				"Subject": false,
+				"Message": false
+			}
+		};
+	},
+	methods: {
+		submitForm: function submitForm() {
+			var $this = this;
+
+			function checkFields(form) {
+				var inputFields = ["First Name", "formmail_mail_email", "Subject", "Message"];
+				var counter;
+				var name;
+				var msg = "Please complete the following fields:\n";
+				var error = false;
+				inputFields.forEach(function (name) {
+					if (form[name].length == 0) {
+						$this.formErrors[name] = true;
+						error = true;
+					} else {
+						if (name == "formmail_mail_email" && emailCheck(form.formmail_mail_email)) {
+							$this.formErrors.formmail_mail_email = true;
+							error = true;
+						} else {
+							$this.formErrors[name] = false;
+						}
+					}
+				});
+
+				if (error) {
+					return false;
+				} else {
+					$this.formErrors = {};
+				}
+
+				if (form.formmail_mail_email.length > 0) {
+					return true;
+					// return emailCheck( form.formmail_mail_email );
+				} else {
+					return true;
+				}
+			}
+
+			function emailCheck(emailStr) {
+				var emailPat = /^(.+)@(.+)$/;
+				var matchArray = emailStr.match(emailPat);
+
+				if (matchArray == null) {
+					$this.formErrors = "Email address seems incorrect (check @ and .'s)";
+					return true;
+				} else {
+					$this.formErrors = '';
+				}
+
+				return false;
+			}
+
+			var form = {
+				"First Name": $('#formFirstName').val(),
+				"Last Name": $('#formLastName').val(),
+				formmail_mail_email: $('#formEmail').val(),
+				"Subject": $('#formSubject').val(),
+				"Message": $('#formMessage').val()
+			};
+
+			var valid_form = checkFields(form);
+
+			if (valid_form) {
+				$.ajax({
+					method: 'POST',
+					// url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl',
+					url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.testingform.pl',
+					data: form
+				}).then(function (response) {
+					console.log(response);
+					$('#formFirstName').val(''), $('#formLastName').val(''), $('#formEmail').val(''), $('#formSubject').val(''), $('#formMessage').val('');
+				}, function (response) {
+					console.log('Error', response);
+				});
+			}
+		}
+	}
 });
 
 // ROUTER ========
@@ -406,13 +521,17 @@ var beryl = new Vue({
 	router: router,
 	data: {
 		transitionName: 'drop-down',
-		loading: true
+		loading: true,
+		mobileDevice: false
 	},
 	template: '<div id="app" v-cloak>\n\t\t<transition name="load-finish">\n\t\t\t<div id="loading-shade" v-if="loading">\n\t\t\t\t<img class="loading-icon" src="public/images/header/bgsc-logo.png" />\n\t\t\t</div>\n\t\t</transition>\n\t\t<bc-header></bc-header>\n\t\t<div id="main">\n\t\t\t<transition :name="transitionName">\n\t\t\t\t<router-view class="view"></router-view>\n\t\t\t</transition>\n\t\t</div>\n\t</div>',
 	beforeMount: function beforeMount() {
 		if (this.$route.name == 'project' && (!currentProject || !currentProject.id)) {
 			currentProject = findWhere(allProjects, { id: this.$route.params.id });
 		}
+		// DETECT MOBILE DEVICE
+		this.mobileDevice = mobileDevice;
+		if (width < 700) this.mobileDevice = true;
 	},
 	mounted: function mounted() {
 		var $this = this;
@@ -422,9 +541,11 @@ var beryl = new Vue({
 		// PRELOAD IMAGES AND SET LOADED WHEN FINISHED
 		this.preLoadImages(images, function () {
 			// SET ANIMATED ELEMENTS
-			$('.aniview').AniView({
-				animateThreshold: 200
-			});
+			if (!$this.mobileDevice) {
+				$('.aniview').AniView({
+					animateThreshold: 200
+				});
+			}
 			// REMOVE LOADING SHADE
 			$this.loading = false;
 		});
@@ -482,15 +603,20 @@ var beryl = new Vue({
 			});
 		},
 		beforeRouteUpdate: function beforeRouteUpdate(to, from) {
-			// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
-			if (from.name == 'projects' || from.name == 'project') {
-				this.transitionName = 'drop-down';
-				// IF BACK TO PROJECTS DROP ABOUT & CONTACT UP
-			} else if (to.name == 'projects') {
-				this.transitionName = 'drop-up';
-				// IF FROM/TO ABOUT OR CONTACT DROP OUT AND "to" DOWN
+			// REMOVE TRANSITIONS IF MOBILE MENU
+			if (this.mobileDevice) {
+				this.transitionName = '';
 			} else {
-				this.transitionName = 'drop-down-out';
+				// IF FROM PROJECTS OR PROJECT DROP ABOUT & CONTACT DOWN
+				if (from.name == 'projects' || from.name == 'project') {
+					this.transitionName = 'drop-down';
+					// IF BACK TO PROJECTS DROP ABOUT & CONTACT UP
+				} else if (to.name == 'projects') {
+					this.transitionName = 'drop-up';
+					// IF FROM/TO ABOUT OR CONTACT DROP OUT AND "to" DOWN
+				} else {
+					this.transitionName = 'drop-down-out';
+				}
 			}
 		}
 	}

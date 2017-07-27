@@ -255,7 +255,7 @@ var Header = Vue.component( 'bc-header', {
 					</div>
 				</div>
 				</transition>
-				<span class="mobile-header-menu" v-on:click="navOpen = !navOpen">
+				<span class="mobile-header-menu" v-on:click="navOpen = !navOpen" v-bind:class="{ 'close-x': navOpen }">
 					<span class="hamburger"></span>
 				</span>
 			</div>
@@ -629,6 +629,7 @@ var About = Vue.component( 'bc-about', {
 });
 
 // CONTACT
+// action="https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl" method="post"
 
 var Contact = Vue.component( 'bc-contact', {
 	template:
@@ -639,41 +640,135 @@ var Contact = Vue.component( 'bc-contact', {
 					<a class="email-link" href="mailto:hi@berylchung.com?Subject=Hi">hi@berylchung.com</a>
 				</div>
 				<div class="contact-form">
-					<form>
+					<form id="feedbackForm">
 						<p class="group-label">Name</p>
 						<div class="form-group">
-							<div class="input-group half-width">
-								<input />
+							<div class="input-group half-width" v-bind:class="{ 'has-error': formErrors['First Name'] }">
+								<input id="formFirstName" name="First Name"/>
 								<p>First Name</p>
 							</div>
 							<div class="input-group half-width">
-								<input />
+								<input id="formLastName" name="Last Name"/>
 								<p>Last Name</p>
 							</div>
 						</div>
 						<p class="group-label">Email Address</p>
 						<div class="form-group">
-							<div class="input-group">
-								<input />
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors['formmail_mail_email'] }">
+								<input id="formEmail" name="formmail_mail_email" />
 							</div>
 						</div>
 						<p class="group-label">Subject</p>
 						<div class="form-group">
-							<div class="input-group">
-								<input />
+							<div class="input-group" :class="{ 'has-error': formErrors['Subject'] }">
+								<input id="formSubject" name="Subject"/>
 							</div>
 						</div>
 						<p class="group-label">Message</p>
 						<div class="form-group">
-							<div class="input-group">
-								<textarea></textarea>
+							<div class="input-group" :class="{ 'has-error': formErrors['Message'] }">
+								<textarea id="formMessage" name="Message"></textarea>
 							</div>
 						</div>
-						<button class="submit-btn" type="submit">SUBMIT</button>
 					</form>
+					<button class="submit-btn" v-on:click="submitForm();">SUBMIT</button>
 				</div>
 			</div>
-		</div>`
+		</div>`,
+	data: function() {
+		return {
+			formErrors: {
+				"First Name": false,
+				"formmail_mail_email": false,
+				"Subject": false,
+				"Message": false
+			}
+		};
+	},
+	methods: {
+		submitForm: function() {
+			var $this = this;
+
+			function checkFields(form) {
+				var inputFields = ["First Name" , "formmail_mail_email", "Subject", "Message"];
+				var counter;
+				var name;
+				var msg = "Please complete the following fields:\n";
+				var error = false;
+				inputFields.forEach( function(name) {
+					if ( form[name].length == 0 ) {
+						$this.formErrors[name] = true;
+						error = true;
+					} else {
+						if ( name == "formmail_mail_email" && emailCheck( form.formmail_mail_email ) ) {
+							$this.formErrors.formmail_mail_email = true;
+							error = true;
+						} else {
+							$this.formErrors[name] = false;
+						}
+					}
+				});
+
+				if ( error ) {
+					return false;
+				} else {
+					$this.formErrors = {};
+				}
+
+				if ( form.formmail_mail_email.length > 0 ) {
+					return true;
+					// return emailCheck( form.formmail_mail_email );
+				} else {
+					return true;
+				}
+			}
+
+			function emailCheck(emailStr) {
+				var emailPat=/^(.+)@(.+)$/;
+				var matchArray=emailStr.match(emailPat);
+
+				if ( matchArray==null ) {
+					$this.formErrors = "Email address seems incorrect (check @ and .'s)";
+					return true;
+				} else {
+					$this.formErrors = '';
+				}
+
+		 		return false;
+			}
+
+			var form = {
+				"First Name": $('#formFirstName').val(),
+				"Last Name": $('#formLastName').val(),
+				formmail_mail_email: $('#formEmail').val(),
+				"Subject": $('#formSubject').val(),
+				"Message": $('#formMessage').val()
+			};
+
+			var valid_form = checkFields(form);
+
+			if ( valid_form ) {
+				$.ajax({
+					method: 'POST',
+					// url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl',
+					url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.testingform.pl',
+					data: form
+				}).then(
+					function( response ) {
+						console.log( response );
+						$('#formFirstName').val(''),
+						$('#formLastName').val(''),
+						$('#formEmail').val(''),
+						$('#formSubject').val(''),
+						$('#formMessage').val('')
+					},
+					function( response ) {
+						console.log( 'Error', response );
+					}
+				);
+			}
+		}
+	}
 });
 
 

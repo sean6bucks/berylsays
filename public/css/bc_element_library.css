@@ -497,6 +497,7 @@ a:hover {
 	flex-grow: 3;
 	width: 30%;
 	padding-right: 8%;
+	order: 1;
 }
 
 .illustration-preview {
@@ -507,6 +508,7 @@ a:hover {
 	align-items: flex-start;
 	flex-grow: 7;
 	width: 70%;
+	order: 2;
 }
 
 .illustration-preview .illustration-img {
@@ -871,6 +873,7 @@ a:hover {
 	outline: none;
 	box-shadow: none;
 	background: #f6f6f6;
+	border-radius: 0;
 }
 
 .input-group input,
@@ -915,6 +918,17 @@ a:hover {
 
 .submit-btn:active {
 	color: #c2912e;
+}
+
+.form-errors {
+	width: 100%;
+	text-align: center;
+	color: red;
+}
+
+.input-group.has-error input,
+.input-group.has-error textarea {
+	border-color: #D8000D;
 }
 
 /* === VUE TRANSITIONS === */
