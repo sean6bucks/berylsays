@@ -721,7 +721,6 @@ var Contact = Vue.component( 'bc-contact', {
 				inputFields.forEach( function( name ) {
 					if ( form[name].length == 0 ) {
 						$this.formErrors[name] = true;
-						console.log( $this.formErrors, name );
 						error = true;
 					} else {
 						if ( name == "formmail_mail_email" ) {
@@ -732,7 +731,6 @@ var Contact = Vue.component( 'bc-contact', {
 								$this.formErrors.formmail_mail_email = false;
 							}
 						} else {
-							console.log( $this.formErrors, name );
 							$this.formErrors[name] = false;
 						}
 					}
@@ -744,7 +742,6 @@ var Contact = Vue.component( 'bc-contact', {
 					inputFields.forEach( function( name ) {
 						$this.formErrors[name] = false;
 					});
-					console.log( $this.formErrors, name );
 				}
 
 				if ( form.formmail_mail_email.length > 0 ) {
