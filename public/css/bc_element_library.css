@@ -1039,6 +1039,17 @@ a:hover {
 	transition: all .3s ease;
 }
 
+.slide-up-leave-active,
+.slide-down-enter-active,
+.slide-up-enter-active,
+.slide-down-leave-active,
+.slide-up-enter-active *,
+.slide-down-leave-active *,
+.slide-up-leave-active *,
+.slide-down-enter-active * {
+	overflow: hidden;
+}
+
 .slide-up-enter,
 .slide-down-leave-to {
 	-webkit-transform: translateY( 100% );
