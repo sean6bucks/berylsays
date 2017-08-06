@@ -239,7 +239,7 @@ var Header = Vue.component( 'bc-header', {
 	template: 
 		`<div id="header">
 			<div id="inner-header">
-				<span id="header-icon" class="bc bc-beryl-icon">
+				<span v-on:click="navigate('projects')" id="header-icon" class="bc bc-beryl-icon">
 					<img src="public/images/header/bgsc-logo.png" />
 				</span>
 				<transition :name="'menu-open'">
@@ -305,10 +305,9 @@ var Header = Vue.component( 'bc-header', {
 		var target = $('#'+ name +'-nav')[0];
 		// SET START LOCATION FOR NAV LINE
 		if ( !this.mobileDevice ) {
-			$('#nav-line').css({
-				left: target.offsetLeft,
-				width: target.offsetWidth
-			}, 0);
+			setTimeout(function() { 
+				$this.setLine( target, 0 );
+			}, 100 );
 		}
 		$('.nav-item').removeClass( 'active' );
 		$(target).addClass( 'active' );
@@ -317,31 +316,35 @@ var Header = Vue.component( 'bc-header', {
 			var name = $this.$route.name == 'project' ? 'projects' : $this.$route.name; 
 			var target = $('#'+ name +'-nav')[0];
 			if ( !$this.mobileDevice ) {
-				$('#nav-line').css({
-					left: target.offsetLeft,
-					width: target.offsetWidth
-				}, 0);
+				$this.setLine( target, 0 );
 			}
 		});
 	},
 	methods: {
 		navigate: function( page ) {
 			if ( page == this.$route.name ) return;
+			console.log(page);
 			router.push({ name: page });
 
 			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
 			var name = page == 'project' ? 'projects' : this.$route.name; 
 			var target = $('#'+ name +'-nav')[0];
 			if ( !this.mobileDevice ) {
-				$('#nav-line').animate({
-					left: target.offsetLeft,
-					width: target.offsetWidth
-				}, 20, 'easeInExpo');
+				this.setLine( target, 20, 'easeInExpo' );
 			} else {
 				this.navOpen = false;
 			}
 			$('.nav-item').removeClass( 'active' );
 			$(target).addClass( 'active' );
+		},
+		setLine: function( target, delay, ease ) {
+			if ( !delay ) delay = 0;
+			if ( !ease ) ease = 'ease';
+
+			$('#nav-line').animate({
+				left: target.offsetLeft,
+				width: target.offsetWidth
+			}, delay, ease );
 		}
 	}
 });
@@ -387,7 +390,9 @@ var Projects = Vue.component( 'bc-projects', {
 				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex], height: mobileHeight }">
 					<div class="hero-text">
 						<h1>Hello, <br class="sm-br">I&apos;m Beryl</h1>
-						<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
+						<router-link :to="{ name: 'about' }">
+							<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
+						</router-link>
 					</div>
 					<div class="hero-image" v-for="n in 6">
 						<img :src="'public/images/projects/hero-' + n + '.png'" />
@@ -603,6 +608,7 @@ var About = Vue.component( 'bc-about', {
 				bio: 'Beryl was born & raised in New York and is an only child, which explains a lot about her personality. She has a BFA from Parsons the New School for Design.',
 				experience: 'Beryl’s experience extends across multiple industries, for a roster of both national and international clients. Clients include: Intercontinental Hotels Group, H&M, Ermenegildo Zegna, Pepsi, UPS, Unilever, Dupont, Brand USA, NFL, Premier League.',
 				features: [
+					{ name: 'Drift Compass: Portrait Project', link: 'https://youtu.be/NIHBQGYyEkM' },
 					{ name: 'Giant Robot NY', link: 'https://www.giantrobot.com/blogs/giant-robot-store-and-gr2-news/15827171-grny-dime-bag-3-group-show-7-18-09-8-12-09' },
 					{ name: 'Juxtapoz Magazine', link: 'https://www.juxtapoz.com/news/illustration/beryl-chungs-dedication-to-the-king-of-rock-and-roll/' }
 				]
@@ -621,8 +627,8 @@ var About = Vue.component( 'bc-about', {
 						<h3>{{ personal.career }}</h3>
 						<h3>{{ personal.bio }}</h3>
 						<p class="h6">{{ personal.experience }}</p>
-						<p class="h6">
-							Featured in: <span v-for="(featured, index ) in personal.features"><a v-bind:href="featured.link">{{ featured.name }}</a><span v-show="index+1 < personal.features.length">, </span></span>
+						<p class="h6 featured-links">
+							Featured in: <span v-for="(featured, index) in personal.features"><a v-bind:href="featured.link">{{ featured.name }}</a><span v-show="index+1 < personal.features.length">, </span></span>
 						</p>
 					</div>
 				</div>
