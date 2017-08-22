@@ -435,7 +435,7 @@ var Projects = Vue.component( 'bc-projects', {
 					</div>
 				</div>
 				<div class="footer-block">
-					<p>Beryl Chung 2017 &copy;</p>
+					<p>Beryl Chung &copy; 2017</p>
 				</div>
 			</div>
 		</div>`,
@@ -556,7 +556,7 @@ var Project = Vue.component( 'bc-detail', {
 							</div>
 						</div>
 						<div class="footer-block">
-							<p>Beryl Chung 2017 &copy;</p>
+							<p>Beryl Chung &copy; 2017</p>
 						</div>
 					</div>
 				</div>
@@ -642,7 +642,7 @@ var About = Vue.component( 'bc-about', {
 				</div>
 			</div>
 			<div class="footer-block">
-				<p>Beryl Chung 2017 &copy;</p>
+				<p>Beryl Chung &copy; 2017</p>
 			</div>
 		</div>`,
 });
@@ -695,7 +695,7 @@ var Contact = Vue.component( 'bc-contact', {
 				</div>
 			</div>
 			<div class="footer-block">
-				<p>Beryl Chung 2017 &copy;</p>
+				<p>Beryl Chung &copy; 2017</p>
 			</div>
 		</div>`,
 	data: function() {
