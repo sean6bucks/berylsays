@@ -52,9 +52,11 @@ li {
 }
 
 .footer-block {
+	width: 100%;
 	text-align: center;
 	margin-top: 20px;
 	padding: 10px 5px;
+	color: #d7d7d7;
 }
 
 
@@ -201,6 +203,7 @@ a:hover {
 	vertical-align: top;
 	display: inline-block;
 	height: 42px;
+	cursor: pointer;
 }
 #header-icon img {
 	vertical-align: top;
@@ -277,7 +280,7 @@ a:hover {
 	position: absolute;
 	top: 0;
 	left: 0;
-	bottom: 0;
+	min-height: 100%;
 	width: 100%;
 	background: #ffffff;
 }
@@ -288,6 +291,7 @@ a:hover {
 
 .project-detail {
 	z-index: 10;
+	bottom: 0;
 }
 
 #about,
@@ -318,6 +322,10 @@ a:hover {
 
 .hero-text h1 {
 	margin: 30px 0 20px 0; 
+}
+
+.hero-text a:hover {
+	text-decoration: underline;
 }
 
 .hero-image {
@@ -434,8 +442,8 @@ a:hover {
 
 .client-item .client-body {
 	padding: 20px 20px 20px 0;
-	width: 50%;
-	height: 200px;
+	width: 60%;
+	height: 225px;
 }
 
 .client-item .client-body h3 {
@@ -581,7 +589,7 @@ a:hover {
 .back-button {
 	position: relative;
 	color: #d7d7d7;
-	font-size: 18px;
+	font-size: 14px;
 	z-index: 12;
 	-webkit-transition: color .2s ease;
 	transition: color .2s ease;
@@ -674,6 +682,7 @@ a:hover {
 
 .gallery-label {
 	color: #d7d7d7;
+	font-size: 14px;
 	font-style: italic;
 	line-height: 40px;
 	vertical-align: top;
@@ -785,6 +794,10 @@ a:hover {
 	margin-bottom: 15px;
 }
 
+.featured-links a:hover {
+	text-decoration: underline;
+}
+
 #personal-info .right-block {
 	text-align: right;
 }
@@ -827,9 +840,10 @@ a:hover {
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: flex-start;
-	padding: 50px 20px;
+	padding: 50px 20px 0 20px;
 	margin: 0 auto;
 	max-width: 1180px;
 	width: 100%;
@@ -891,12 +905,12 @@ a:hover {
 
 .input-group input {
 	border: none;
-	border-bottom: 2px solid #000;
+	border-bottom: 1px solid #000;
 	height: 30px;
 }
 
 .input-group textarea {
-	border: 2px solid #000;
+	border: 1px solid #000;
 	resize: none;
 	height: 100px;
 	padding: 5px;
@@ -923,7 +937,8 @@ a:hover {
 }
 
 .submit-btn:active {
-	color: #c2912e;
+	border-color: #c2912e;
+	background-color: #c2912e;
 }
 
 .form-error {
@@ -932,7 +947,7 @@ a:hover {
 
 .input-group.has-error input,
 .input-group.has-error textarea {
-	border-color: #D8000D;
+	border-color: #FF5A00;
 }
 
 /* === VUE TRANSITIONS === */
@@ -1022,6 +1037,17 @@ a:hover {
 .slide-down-enter-active {
 	-webkit-transition: all .3s ease;
 	transition: all .3s ease;
+}
+
+.slide-up-leave-active,
+.slide-down-enter-active,
+.slide-up-enter-active,
+.slide-down-leave-active,
+.slide-up-enter-active *,
+.slide-down-leave-active *,
+.slide-up-leave-active *,
+.slide-down-enter-active * {
+	overflow: hidden;
 }
 
 .slide-up-enter,
