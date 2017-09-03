@@ -9,6 +9,8 @@ var allProjects = [
 		brand: 'Holiday Inn',
 		title: 'What Would You Do with an Extra Day',
 		summary: 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals.',
+		text: [ 'Through balancing work & pleasure, Holiday Inn wants to create more Moments of Joy for busy professionals. We created an H5 that asked guests how they would spend time with someone they love if they had extended their stay an Extra Day the next time they travel for business.', 'Through an illustrated chat simulation, the idea of Extended Stay is introduced...Messages from different friends show different examples of the difficulty in work/life balance. By submitting one sentence about how to spend an Extra Day, users are entered to receive free Extended Stay giveaways.' 
+		],
 		tags: [ 'Animation', 'Art Direction', 'Digital Activation', 'Illustration', 'Mobile H5' ],
 		banner: 'HolidayInn_preview_banner.jpg',
 		mobile: 'HolidayInn_preview_mobile.png',
@@ -29,7 +31,9 @@ var allProjects = [
 		id: 'ups',
 		brand: 'UPS',
 		title: 'UPS Whitepapers: Think Like a Leader',
-		summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions’ annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
+		summary: 'We created a concise infographic and corresponding animated video for UPS Supply Chain Solutions\' annual white papers about the stand out characteristics of successful leaders in export manufacturing.',
+		text: [ 'UPS Supply Chain Solutions\' annual white papers provide insight into the guiding principles used to create innovative solutions and strategies that synchronize multiple business processes.', 'To make this valuable document appealing and easy to digest, we created a concise infographic and corresponding animated video about the stand out characteristics of successful leaders in export manufacturing.' 
+		],
 		tags: [ 'Animation', 'Art Direction', 'Illustration', 'infographic' ],
 		banner: 'UPS_preview_banner.png',
 		elements: [
@@ -50,6 +54,8 @@ var allProjects = [
 		brand: 'Ogilvy',
 		title: 'Making Data Tracking Simple',
 		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
+		text: [ 'Whether you are looking to understand your audience better, produce better content, or just run a smarter loyalty program - data can help you achieve it.  This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.', 'When a brand has the ability to deliver the right content at the right time in the right channel... Jay is not only more likely to engage with you, he also knows that you value him as an individual, increasing that tough-to-earn Brand Love.' 
+		],
 		tags: [ 'Animation', 'Art Direction', 'Illustration' ],
 		banner: 'Ogilvy_preview_banner.png',
 		elements: [
@@ -91,7 +97,9 @@ var allProjects = [
 		brand: 'Pepsi',
 		title: 'Welcome to the New Pepsi Challenge',
 		summary: 'In China, 12 Pepsi Ambassadors from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.',
-		tags: [ 'Art Direction', 'Digital Activation', 'Illustration', 'Print Campaign', 'OOH' ],
+		text: [ 'Pepsi and Pepsi Ambassadors worldwide issue a series of unforgettable challenges and rewards throughout the year. In China, 12 KOLs from a variety of fields and backgrounds encourage the world to dream a little bigger, have more fun, and, most importantly: to Live for Now.', 'Each of the 6 challenge themes - Tech, Music, Film, Entrepreneurship, Design, and Sport - features its own unique design profile. For the key visuals, these disparate identities are unified with Pepsi\'s iconic red, white, and blue.', 'Are you ready to take on the Pepsi Challenge?' 
+		],
+		tags: [ 'Art Direction', 'Digital Activation', 'Illustration', 'Mobile H5', 'Print Campaign', 'OOH' ],
 		banner: 'Pepsi_preview_banner.jpg',
 		elements: [
 			{
@@ -120,13 +128,62 @@ var allProjects = [
 	},
 	{
 		category: 'events',
+		id: 'top5',
+		brand: 'Pop Culture Poster Show',
+		title: 'What\'s Your All-Time, Desert Island TOP 5?',
+		summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
+		text: [ 
+			'When someone asks what you like, what you listen to, what you\'re reading, the purpose of the question is not only to spark conversation around common interests. Gauging your taste offers sometimes unexpected insights into your personality, into how you define your identity, and thus who you are.', 
+			'In an artist\'s development, mass media and pop culture have great influence.', 
+			'TOP 5 asks artists from different disciplines to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.', 
+			'To see all the posters and find out more, visit <a class="gold-link" href="http://top5postershow.com">top5postershow.com</a>',
+			'Featured in: <a href="http://www.timeoutshanghai.com/features/Things_to_Do-Around_Town/46019/Unravel-and-TOP-5-team-up-for-a-night-of-live-storytelling-and-pop-art.html">TimeOut Shanghai</a>, <a href="http://www.smartshanghai.com/wire/community/unravel-and-top-5-founders-talk-about-upcoming-collaboration">SmartShanghai</a>' 
+		],
+		tags: ['Art Exhibition', 'Event Organization', 'Promotional Materials', 'Illustration' ],
+		main_image: 'TOP5-main.png',
+		secondary_image: 'TOP5-secondary.png',
+		elements: [
+			{
+				type: 'gallery',
+				slides: [ 'TOP5-slide00.jpg', 'TOP5-slide01.jpg', 'TOP5-slide02.jpg', 'TOP5-slide03.jpg', 'TOP5-slide04.jpg', 'TOP5-slide05.jpg', 'TOP5-slide06.jpg', 'TOP5-slide07.jpg', 'TOP5-slide08.jpg' ]
+			},
+			{
+				type: 'images',
+				images: [ 'TOP5-S2-colorstrip.jpg' ]
+			},
+			{
+				type: 'html',
+				value: '<h2 class="text-center margin-none">Series 2</h2><p class="text-center">2017/07/27</p>',
+				style: { 'text-align': 'center' }
+			},
+			{
+				type: 'images',
+				images: [ 'TOP5-S2-flyer.jpg', 'TOP5-S2-poster.jpg', 'TOP5-S2-timeout.jpg' ]
+			},
+			{
+				type: 'images',
+				images: [ 'TOP5-S1-colorstrip.jpg' ]
+			},
+			{
+				type: 'html',
+				value: '<h2 class="text-center margin-none">Series 1</h2><p class="text-center">2016/12/02</p>',
+				style: { 'text-align': 'center' }
+			},
+			{
+				type: 'images',
+				images: [ 'TOP5-S1-flyer.jpg', 'TOP5-S1-poster.png' ]
+			}
+		]
+	},
+	{
+		category: 'events',
 		id: 'elvis',
 		brand: 'Elvis Fan Club',
 		title: 'A Teenage Dream, Realized',
-		summary: '"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.',
+		summary: '"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You\'re invited to the biggest, weirdest, wackiest 81st birthday party ever.',
 		text: [
 			'How do you describe a dream come to life? A personal goal since high school, “Happy Birthday, Elvis” Fest was years in the making.',
-			'"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You’re invited to the biggest, weirdest, wackiest 81st birthday party ever.'
+			'"Happy Birthday, Elvis" Fest 2016 encompassed 7 Elvis-themed events over 2 weekends in Hong Kong and Shanghai. You\'re invited to the biggest, weirdest, wackiest 81st birthday party ever.'
 		],
 		main_image: 'Elvis_main.png',
 		secondary_image: 'Elvis_secondary.png',
@@ -160,31 +217,15 @@ var allProjects = [
 		]
 	},
 	{
-		category: 'events',
-		id: 'top5',
-		brand: 'Pop Culture Poster Show',
-		title: 'What’s Your All-Time, Desert Island TOP 5?',
-		summary: 'We ask artists from different disciplines - graphic design, illustration, fashion, printmaking - to create a series of 5 posters based on their TOP 5 biggest artistic influences from movies, TV, books, comics, and music... using only 5 colors.',
-		tags: ['Art Exhibition', 'Event Organization', 'Promotional Materials', 'Illustration' ],
-		main_image: 'Top5_main.png',
-		secondary_image: 'Top5_secondary.png',
-		elements: [
-			{
-				type: 'gallery',
-				slides: [ 'slide1.jpg','slide2.jpg', 'slide3.jpg', 'slide4.jpg', 'slide5.jpg' ]
-			},
-			{
-				type: 'images',
-				images: [ 'flyer.jpg', 'poster.png' ]
-			}
-		]
-	},
-	{
 		category: 'illustration',
 		id: 'illustration',
 		title: 'Art & Illustration',
-		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates’ notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.',
-		tags: [ 'MisterBaby', 'Pepsi Team', 'HOTB', 'Elvis Alter', 'Elvis Facecards', 'Unraveled: The Line', 'Unraveled: Chance' ],
+		summary: 'I like to say my first illustration job was in grade school, copying pokemon cards on classmates\' notebooks for snack money. Check out these more recent selected illustration projects and personal favorites.',
+		text: [ 
+			'I like to say my first illustration job was in grade school, copying pokemon cards on classmates\' notebooks for snack money.', 
+			'Check out these more recent selected illustration projects and personal favorites.' 
+		],
+		tags: [ 'Illustration Projects', 'Personal Projects', 'Textile Design', 'Unravel Stroytelling Posters' ],
 		elements: [
 			{
 				type: 'flex-grid',
@@ -199,7 +240,9 @@ var allProjects = [
 					{ type: 'image', value: 'Illo-08.jpg' },
 					{ type: 'image', value: 'Illo-09.jpg', custom_class: 'flex-center' },
 					{ type: 'image', value: 'Illo-10.jpg' },
-					{ type: 'image', value: 'Illo-11.jpg' }
+					{ type: 'image', value: 'Illo-11.jpg' },
+					{ type: 'image', value: 'Illo-12.jpg' },
+					{ type: 'image', value: 'Illo-13.jpg' }
 				]
 			}
 		]
@@ -215,9 +258,9 @@ var mobileDevice = width < 700 ? true : false;
 
 // add custom ease options for jquery without full UI library
 if ($) $.extend( jQuery.easing, {
-    easeInExpo: function (x, t, b, c, d) {
-        return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
-    }
+	easeInExpo: function (x, t, b, c, d) {
+		return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
+	}
 });
 
 // REGISTER UPPERCASE FILTER
@@ -323,7 +366,6 @@ var Header = Vue.component( 'bc-header', {
 	methods: {
 		navigate: function( page ) {
 			if ( page == this.$route.name ) return;
-			console.log(page);
 			router.push({ name: page });
 
 			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
@@ -420,8 +462,8 @@ var Projects = Vue.component( 'bc-projects', {
 
 				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
 					<div class="project-preview">
-						<img class="main-img" :src="'public/images/projects/' + project.main_image"/>
 						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image"/>
+						<img class="main-img" :src="'public/images/projects/' + project.main_image"/>
 					</div>
 					<div class="project-body">
 						<h6>{{ project.brand | uppercase }}</h6>
@@ -516,16 +558,18 @@ var Project = Vue.component( 'bc-detail', {
 		`<div :id="currentProject.id +'-detail'" class="project-detail">
 			<div class="project-block">
 				<div class="left-column">
-					<h6>{{ currentProject.brand | uppercase }}</h6>
-					<h2>{{ currentProject.title }}</h2>
-					<div class="project-text">
-						<p class="h4" v-for="text in currentProject.text">{{ text }}</p>
-						<p class="h4" v-if="!currentProject.text">{{ currentProject.summary }}</p>
+					<div class="inner-container">
+						<h6>{{ currentProject.brand | uppercase }}</h6>
+						<h2>{{ currentProject.title }}</h2>
+						<div class="project-text">
+							<p class="h4" v-for="text in currentProject.text" v-html="text"></p>
+							<p class="h4" v-if="!currentProject.text">{{ currentProject.summary }}</p>
+						</div>
+						<p class="project-tags" v-if="currentProject.tags">{{ currentProject.tags.join( '; ' ) }}</p>
+						<router-link class="back-button" :to="{ name: 'projects' }">
+							<span class="bc bc-arrow-left"></span> Back
+						</router-link>
 					</div>
-					<p class="project-tags" v-if="currentProject.tags">{{ currentProject.tags.join( '; ' ) }}</p>
-					<router-link class="back-button" :to="{ name: 'projects' }">
-						<span class="bc bc-arrow-left"></span> Back
-					</router-link>
 				</div>
 				<div class="right-column">
 					<div class="inner-container">
@@ -550,7 +594,7 @@ var Project = Vue.component( 'bc-detail', {
 									<div class="html-block" v-if="item.type=='html'" v-html="item.value"></div>
 								</div>
 							</div>
-
+							<div class="html-block" v-if="element.type=='html'" v-html="element.value" v-bind:style="element.style"></div>
 							<div class="project-images" v-if="element.type=='images'">
 								<div class="project-image" v-for="image in element.images" :key="image">
 									<img :src="'public/images/projects/' + currentProject.id + '/' + image">
@@ -606,11 +650,11 @@ var About = Vue.component( 'bc-about', {
 			personal: {
 				career: 'Beryl Chung is an art director, illustrator, and designer working in digital media & advertising. She is currently living in Shanghai spending her hard-earned wages on soup dumplings & karaoke.',
 				bio: 'Beryl was born & raised in New York and is an only child, which explains a lot about her personality. She has a BFA from Parsons the New School for Design.',
-				experience: 'Beryl’s experience extends across multiple industries, for a roster of both national and international clients. Clients include: Intercontinental Hotels Group, H&M, Ermenegildo Zegna, Pepsi, UPS, Unilever, Dupont, Brand USA, NFL, Premier League.',
+				experience: 'Beryl\'s experience extends across multiple industries for a roster of both national and international clients, including: Intercontinental Hotels Group, H&M, Ermenegildo Zegna, Pepsi, UPS, Unilever, Dupont, Merck Sharp & Dohme, Brand USA, NFL, Premier League.',
 				features: [
-					{ name: 'Drift Compass: Portrait Project', link: 'https://youtu.be/NIHBQGYyEkM' },
-					{ name: 'Giant Robot NY', link: 'https://www.giantrobot.com/blogs/giant-robot-store-and-gr2-news/15827171-grny-dime-bag-3-group-show-7-18-09-8-12-09' },
-					{ name: 'Juxtapoz Magazine', link: 'https://www.juxtapoz.com/news/illustration/beryl-chungs-dedication-to-the-king-of-rock-and-roll/' }
+					{ name: 'Drift Compass | Portrait Project', link: 'https://youtu.be/NIHBQGYyEkM' },
+					{ name: 'Juxtapoz Magazine', link: 'https://www.juxtapoz.com/news/illustration/beryl-chungs-dedication-to-the-king-of-rock-and-roll/' },
+					{ name: 'Giant Robot NY', link: 'https://www.giantrobot.com/blogs/giant-robot-store-and-gr2-news/15827171-grny-dime-bag-3-group-show-7-18-09-8-12-09' }
 				]
 			},
 			beryl: {
@@ -627,7 +671,7 @@ var About = Vue.component( 'bc-about', {
 						<h3>{{ personal.career }}</h3>
 						<h3>{{ personal.bio }}</h3>
 						<p class="h6">{{ personal.experience }}</p>
-						<p class="h6 featured-links">
+						<p class="h6 featured-links project-tags">
 							Featured in: <span v-for="(featured, index) in personal.features"><a v-bind:href="featured.link">{{ featured.name }}</a><span v-show="index+1 < personal.features.length">, </span></span>
 						</p>
 					</div>
@@ -668,36 +712,39 @@ var Contact = Vue.component( 'bc-contact', {
 					<form id="feedbackForm">
 						<p class="group-label">Name</p>
 						<div class="form-group">
-							<div class="input-group half-width" v-bind:class="{ 'has-error': formErrors.Name }">
-								<input id="formFirstName" name="First Name"/>
+							<div class="input-group half-width" v-bind:class="{ 'has-error': formErrors.first_name }">
+								<input id="formFirstName" name="First Name" v-model="formVals.first_name"/>
 								<p>First Name</p>
 							</div>
 							<div class="input-group half-width">
-								<input id="formLastName" name="Last Name"/>
+								<input id="formLastName" name="Last Name" v-model="formVals.last_name"/>
 								<p>Last Name</p>
 							</div>
 						</div>
 						<p class="group-label">Email Address</p>
 						<div class="form-group">
-							<div class="input-group" v-bind:class="{ 'has-error': formErrors.formmail_mail_email }">
-								<input id="formEmail" name="formmail_mail_email" />
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.email }">
+								<input id="formEmail" name="formmail_mail_email"  v-model="formVals.email"/>
 								<p class="form-error" v-show="emailError">{{ emailError }}</p>
 							</div>
 						</div>
 						<p class="group-label">Subject</p>
 						<div class="form-group">
-							<div class="input-group" v-bind:class="{ 'has-error': formErrors.Subject }">
-								<input id="formSubject" name="Subject"/>
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.subject }">
+								<input id="formSubject" name="Subject" v-model="formVals.subject"/>
 							</div>
 						</div>
 						<p class="group-label">Message</p>
 						<div class="form-group">
-							<div class="input-group" v-bind:class="{ 'has-error': formErrors.Message }">
-								<textarea id="formMessage" name="Message"></textarea>
+							<div class="input-group" v-bind:class="{ 'has-error': formErrors.message }">
+								<textarea id="formMessage" name="Message" v-model="formVals.message"></textarea>
 							</div>
 						</div>
 					</form>
-					<button class="submit-btn" v-on:click="submitForm();">SUBMIT</button>
+					<button class="submit-btn" v-on:click="submitForm();">
+						<span v-if="!formSending">SUBMIT</span>
+						<span v-if="formSending" class="loader"></span>
+					</button>
 				</div>
 			</div>
 			<div class="footer-block">
@@ -706,57 +753,57 @@ var Contact = Vue.component( 'bc-contact', {
 		</div>`,
 	data: function() {
 		return {
-			formErrors: {
-				"Name": false,
-				"formmail_mail_email": false,
-				"Subject": false,
-				"Message": false
+			formErrors: {},
+			formVals: {
+				first_name: '',
+				last_name: '',
+				email: '',
+				subject: '',
+				message: ''
 			},
+			formSending: false,
 			emailError: ''
 		};
+	},
+	watch: {
+		// WATCH REQUIRED FORM VALS TO RESET ERRORS ON EDIT
+		// EACH VALUE MUST BE SET > DEEP WATCH DOES NOT SHOW NEW AND OLD
+		"formVals.first_name": function( newVal ) { this.formErrors.first_name = null; },
+		"formVals.email": function( newVal ) { this.formErrors.email = null; },
+		"formVals.subject": function( newVal ) { this.formErrors.subject = null; },
+		"formVals.message": function( newVal ) { this.formErrors.message= null; }
 	},
 	methods: {
 		submitForm: function() {
 			var $this = this;
+			if ( $this.formSending ) return;
+			$this.formSending = true;
 
-			function checkFields(form) {
+			function checkFields( form ) {
 
-				var inputFields = [ "Name", "formmail_mail_email", "Subject", "Message" ];
-				var msg = "Please complete the following fields:\n";
+				var required = [ 'first_name', 'email', 'subject', 'message' ];
+				var msg = 'Please complete the following fields:\n';
 				var error = false;
-				inputFields.forEach( function( name ) {
-					if ( form[name].length == 0 ) {
-						$this.formErrors[name] = true;
+				required.forEach( function( val ) {
+					if ( !$this.formVals[val] || $this.formVals[val].length == 0 ) {
+						$this.formErrors[val] = true;
 						error = true;
 					} else {
-						if ( name == "formmail_mail_email" ) {
-							if ( emailCheck( form.formmail_mail_email ) ) {
-								$this.formErrors.formmail_mail_email = true;
+						if ( val == 'email' ) {
+							if ( emailCheck( $this.formVals.email ) ) {
+								$this.formErrors.email = true;
 								error = true;
 							} else {
-								$this.formErrors.formmail_mail_email = false;
+								$this.formErrors.email = false;
 							}
 						} else {
-							$this.formErrors[name] = false;
+							$this.formErrors[val] = false;
 						}
 					}
 				});
 
-				if ( error ) {
-					return false;
-				} else {
-					inputFields.forEach( function( name ) {
-						$this.formErrors[name] = false;
-					});
-				}
-
-				if ( form.formmail_mail_email.length > 0 ) {
-					return true;
-					// return emailCheck( form.formmail_mail_email );
-				} else {
-					return true;
-				}
-
+				// IF ANY ERRORS RETURN FALSE AND STOP SEND
+				return error ? false : true;
 			};
 
 			function emailCheck(emailStr) {
@@ -770,23 +817,24 @@ var Contact = Vue.component( 'bc-contact', {
 					$this.emailError = "";
 				}
 
-		 		return false;
+				return false;
 			};
 
 			var form = {
-				"Name": $('#formFirstName').val(),
-				formmail_mail_email: $('#formEmail').val(),
-				"Subject": $('#formSubject').val(),
-				"Message": $('#formMessage').val()
+				"Name": $this.formVals.first_name,
+				"formmail_mail_email": $this.formVals.email,
+				"Subject": $this.formVals.subject,
+				"Message": $this.formVals.message
 			};
 			// ONLY ADD LAST IF FIRST AVAIL
-			if ( $('#formFirstName').val() && $('#formLastName').val() ) {
-				form.Name += ' ' + $('#formLastName').val();
+			if ( $this.formVals.first_name && $this.formVals.last_name ) {
+				form.Name = $this.formVals.first_name + ' ' + $this.formVals.last_name;
 			}
 
 			var valid_form = checkFields(form);
 
 			if ( valid_form ) {
+				console.log( 'Sending...');
 				$.ajax({
 					method: 'POST',
 					// url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl',
@@ -794,19 +842,23 @@ var Contact = Vue.component( 'bc-contact', {
 					data: form
 				}).then(
 					function( response ) {
-						console.log( response );
-						$('#formFirstName').val(''),
-						$('#formLastName').val(''),
-						$('#formEmail').val(''),
-						$('#formSubject').val(''),
-						$('#formMessage').val('')
+						$this.formVals = {
+							first_name: '',
+							last_name: '',
+							email: '',
+							subject: '',
+							message: ''
+						};
+						$this.formSending = false;
 					},
 					function( response ) {
-						console.log( 'Error', response );
+						$this.formSending = false;
+						console.log( 'AJAX Error', response );
 					}
 				);
 			} else {
-				console.log( $this.formErrors );
+				$this.formSending = false;
+				console.log( 'Form Error', $this.formErrors );
 			}
 		}
 	}
