@@ -225,7 +225,7 @@ var allProjects = [
 			'I like to say my first illustration job was in grade school, copying pokemon cards on classmates\' notebooks for snack money.', 
 			'Check out these more recent selected illustration projects and personal favorites.' 
 		],
-		tags: [ 'Illustration Projects', 'Personal Projects', 'Textile Design', 'Unravel Stroytelling Posters' ],
+		tags: [ 'Illustration Projects', 'Personal Projects', 'Textile Design', 'Unravel Storytelling Posters' ],
 		elements: [
 			{
 				type: 'flex-grid',
@@ -432,9 +432,7 @@ var Projects = Vue.component( 'bc-projects', {
 				<div id="projects-hero" class="hero-banner" v-bind:style="{ background: colors[backgroundIndex], height: mobileHeight }">
 					<div class="hero-text">
 						<h1>Hello, <br class="sm-br">I&apos;m Beryl</h1>
-						<router-link :to="{ name: 'about' }">
-							<h5>ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
-						</router-link>
+						<h5 v-on:click="navigate('about')">ART DIRECTOR / ILLUSTRATOR / DESIGNER / SEMI-PRECIOUS MINERAL</h5>
 					</div>
 					<div class="hero-image" v-for="n in 6">
 						<img :src="'public/images/projects/hero-' + n + '.png'" />
@@ -521,6 +519,30 @@ var Projects = Vue.component( 'bc-projects', {
 		clearTimeout( this.berylLoop );
 	},
 	methods: {
+		navigate: function( page ) {
+			if ( page == this.$route.name ) return;
+			router.push({ name: page });
+
+			// IF PAGE LOAD IS SUB-ROUTE OF PROJECTS SET NAV TAB TO PROJECTS
+			var name = this.$route.name; 
+			var target = $('#'+ name +'-nav')[0];
+			if ( !this.mobileDevice ) {
+				this.setLine( target, 20, 'easeInExpo' );
+			} else {
+				this.navOpen = false;
+			}
+			$('.nav-item').removeClass( 'active' );
+			$(target).addClass( 'active' );
+		},
+		setLine: function( target, delay, ease ) {
+			if ( !delay ) delay = 0;
+			if ( !ease ) ease = 'ease';
+
+			$('#nav-line').animate({
+				left: target.offsetLeft,
+				width: target.offsetWidth
+			}, delay, ease );
+		},
 		nextSlide: function() {
 			var $this = this;
 			// CAROUSEL FOR HERO BANNER GEMS
@@ -670,8 +692,8 @@ var About = Vue.component( 'bc-about', {
 					<div class="text-block">
 						<h3>{{ personal.career }}</h3>
 						<h3>{{ personal.bio }}</h3>
-						<p class="h6">{{ personal.experience }}</p>
-						<p class="h6 featured-links project-tags">
+						<p>{{ personal.experience }}</p>
+						<p class="h6 featured-links">
 							Featured in: <span v-for="(featured, index) in personal.features"><a v-bind:href="featured.link">{{ featured.name }}</a><span v-show="index+1 < personal.features.length">, </span></span>
 						</p>
 					</div>
@@ -762,7 +784,8 @@ var Contact = Vue.component( 'bc-contact', {
 				message: ''
 			},
 			formSending: false,
-			emailError: ''
+			emailError: '',
+			emailSuccess: ''
 		};
 	},
 	watch: {
@@ -778,6 +801,8 @@ var Contact = Vue.component( 'bc-contact', {
 			var $this = this;
 			if ( $this.formSending ) return;
 			$this.formSending = true;
+
+			// ADD HONEYPOT FOR MESSAGES
 
 			function checkFields( form ) {
 
@@ -811,6 +836,7 @@ var Contact = Vue.component( 'bc-contact', {
 				var matchArray=emailStr.match(emailPat);
 
 				if ( matchArray==null ) {
+					$this.emailSuccess = '';
 					$this.emailError = "Email address seems incorrect (check @ and .'s)";
 					return true;
 				} else {
@@ -837,10 +863,10 @@ var Contact = Vue.component( 'bc-contact', {
 				console.log( 'Sending...');
 				$.ajax({
 					method: 'POST',
-					// url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl',
-					url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.testingform.pl',
+					url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.contact.pl',
+					// url: 'https://0356d63.netsolhost.com/cgi-bin/FormMail.testingform.pl',
 					data: form
-				}).then(
+				}).always(
 					function( response ) {
 						$this.formVals = {
 							first_name: '',
@@ -850,12 +876,27 @@ var Contact = Vue.component( 'bc-contact', {
 							message: ''
 						};
 						$this.formSending = false;
-					},
-					function( response ) {
-						$this.formSending = false;
-						console.log( 'AJAX Error', response );
-					}
-				);
+						$this.emailError = '';
+						// TODO: ADD UI FOR SUCCESSFUL MESSAGE
+						$this.emailSuccess = "Message successfully sent."
+					});
+				// 	function( response, status, number ) {
+						
+				// 		if ( status == 200 ) {
+				// 			$this.formVals = {
+				// 				first_name: '',
+				// 				last_name: '',
+				// 				email: '',
+				// 				subject: '',
+				// 				message: ''
+				// 			};
+				// 			$this.formSending = false;
+				// 		} else {
+				// 			$this.formSending = false;
+				// 			console.log( 'AJAX Error', response );
+				// 		}
+				// 	}
+				// );
 			} else {
 				$this.formSending = false;
 				console.log( 'Form Error', $this.formErrors );
@@ -944,12 +985,6 @@ var beryl = new Vue({
 		var images = this.compileImages();
 		// PRELOAD IMAGES AND SET LOADED WHEN FINISHED
 		this.preLoadImages( images, function(){
-			// SET ANIMATED ELEMENTS
-			if ( !$this.mobileDevice ) {
-				$('.aniview').AniView({
-					animateThreshold: 200,
-				});
-			}
 			// REMOVE LOADING SHADE
 			$this.loading = false;
 		});

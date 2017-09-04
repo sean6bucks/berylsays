@@ -236,6 +236,8 @@
 	.project-detail .inner-container {
 		position: relative;
 		display: block;
+		width: 100%;
+    	left: 0;
 	}
 
 	.project-detail .left-column {
