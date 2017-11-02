@@ -3,6 +3,49 @@
 // GLOBAL DATA
 var allProjects = [
 	{
+		category: 'clients',
+		id: 'hm-social',
+		brand: 'Ogilvy',
+		title: 'H&M Social Intelligence',
+		summary: 'By transforming its social content experience on Wechat, H&M turned readers into eCommerce customers, proving that social content is an effective sales channel.',
+		text: [ 'WeChat is China’s most saturated social media platform perceived to have wide reach, yet low effective engagement. Ogilvy proved otherwise, achieving both by using H&M’s consumer data to build the world’s first predictive personal stylist on WeChat, transforming its official WeChat account into a first-of-its-kind consumer-profiling mastermind.', 'By effectively transforming its social content experience, H&M turned readers into eCommerce customers, upping e-commerce traffic by 300% and contributing millions in sales, proving that social content is an effective sales channel.', '<a href="http://www.tangrams.asia/winner/2013/a01-beverages-non-alcoholic-and-alcoholic/data/gold">This case won a Gold & Silver Tangram Effectiveness Award at Spikes Asia 2017</a>'
+		],
+		tags: [ 'Animation', 'Illustration' ],
+		banner: 'HM-Social2.png',
+		elements: [
+			{
+				type: 'video',
+				video_url: 'https://www.youtube.com/embed/9OFjkl0a778',
+				screenshot: 'hm_screenshot.jpeg'
+			},
+			{
+				type: 'flex-grid',
+				items: [ 
+					{
+						type: 'image',
+						value: 'HM-1.gif'
+					},
+					{
+						type: 'image',
+						value: 'HM-2.gif' 
+					},
+					{
+						type: 'image',
+						value: 'HM-3.gif' 
+					},
+					{
+						type: 'image',
+						value: 'HM-4.gif' 
+					}
+				]
+			},
+			{
+				type: 'images',
+				images: [ 'HMSocial-5.png' ]
+			}
+		]
+	},
+	{
 		// TODO: NEED 2x VERSIONS OF IMAGES
 		category: 'clients',
 		id: 'holiday-inn',
@@ -48,49 +91,49 @@ var allProjects = [
 			}
 		]
 	},
-	{
-		category: 'clients',
-		id: 'ogilvy',
-		brand: 'Ogilvy',
-		title: 'Making Data Tracking Simple',
-		summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
-		text: [ 'Whether you are looking to understand your audience better, produce better content, or just run a smarter loyalty program - data can help you achieve it.  This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.', 'When a brand has the ability to deliver the right content at the right time in the right channel... Jay is not only more likely to engage with you, he also knows that you value him as an individual, increasing that tough-to-earn Brand Love.' 
-		],
-		tags: [ 'Animation', 'Art Direction', 'Illustration' ],
-		banner: 'Ogilvy_preview_banner.png',
-		elements: [
-			{
-				type: 'video',
-				video_url: 'https://www.youtube.com/embed/SyQt6jIkobk',
-				screenshot: 'data_screenshot.png'
-			},
-			{
-				type: 'flex-grid',
-				items: [ 
-					{
-						type: 'image',
-						value: 'DATA01.gif'
-					},
-					{
-						type: 'image',
-						value: 'DATA02.gif' 
-					},
-					{
-						type: 'image',
-						value: 'DATA03.gif' 
-					},
-					{
-						type: 'image',
-						value: 'DATA04.gif' 
-					}
-				]
-			},
-			{
-				type: 'images',
-				images: [ 'DATA-storyboard.jpg' ]
-			}
-		]
-	},
+	// {
+	// 	category: 'clients',
+	// 	id: 'ogilvy',
+	// 	brand: 'Ogilvy',
+	// 	title: 'Making Data Tracking Simple',
+	// 	summary: 'This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.',
+	// 	text: [ 'Whether you are looking to understand your audience better, produce better content, or just run a smarter loyalty program - data can help you achieve it.  This animated video follows your customer Jay, as he produces valuable data all day long that could help your brand become a bigger part of his life.', 'When a brand has the ability to deliver the right content at the right time in the right channel... Jay is not only more likely to engage with you, he also knows that you value him as an individual, increasing that tough-to-earn Brand Love.' 
+	// 	],
+	// 	tags: [ 'Animation', 'Art Direction', 'Illustration' ],
+	// 	banner: 'Ogilvy_preview_banner.png',
+	// 	elements: [
+	// 		{
+	// 			type: 'video',
+	// 			video_url: 'https://www.youtube.com/embed/SyQt6jIkobk',
+	// 			screenshot: 'data_screenshot.png'
+	// 		},
+	// 		{
+	// 			type: 'flex-grid',
+	// 			items: [ 
+	// 				{
+	// 					type: 'image',
+	// 					value: 'DATA01.gif'
+	// 				},
+	// 				{
+	// 					type: 'image',
+	// 					value: 'DATA02.gif' 
+	// 				},
+	// 				{
+	// 					type: 'image',
+	// 					value: 'DATA03.gif' 
+	// 				},
+	// 				{
+	// 					type: 'image',
+	// 					value: 'DATA04.gif' 
+	// 				}
+	// 			]
+	// 		},
+	// 		{
+	// 			type: 'images',
+	// 			images: [ 'DATA-storyboard.jpg' ]
+	// 		}
+	// 	]
+	// },
 	{
 		category: 'clients',
 		id: 'pepsi',
@@ -443,11 +486,11 @@ var Projects = Vue.component( 'bc-projects', {
 					<div class="client-item project-item" v-for="( client, index ) in projects.clients" :key="client.id" v-on:click="showProject(client)">
 						<div class="client-preview">
 							<div class="client-preview-crop">
-								<img :src="'public/images/projects/' + client.banner" />
+								<img :src="'public/images/projects/' + client.id + '/' + client.banner" />
 							</div>
-							<img class="banner-img" :src="'public/images/projects/' + client.banner" />
+							<img class="banner-img" :src="'public/images/projects/' + client.id + '/' + client.banner" />
 							<div class="mobile-img" v-if="client.mobile">
-								<img :src="'public/images/projects/' + client.mobile" />
+								<img :src="'public/images/projects/' + client.id + '/' +  client.mobile" />
 							</div>
 						</div>
 						<div class="client-body">
@@ -460,8 +503,8 @@ var Projects = Vue.component( 'bc-projects', {
 
 				<div class="event-item project-item" v-for="( project, index ) in projects.events" :key="project.id" v-on:click="showProject(project)">
 					<div class="project-preview">
-						<img class="secondary-img" :src="'public/images/projects/' + project.secondary_image"/>
-						<img class="main-img" :src="'public/images/projects/' + project.main_image"/>
+						<img class="secondary-img" :src="'public/images/projects/' + project.id + '/' + project.secondary_image"/>
+						<img class="main-img" :src="'public/images/projects/' + project.id + '/' + project.main_image"/>
 					</div>
 					<div class="project-body">
 						<h6>{{ project.brand | uppercase }}</h6>
@@ -472,7 +515,7 @@ var Projects = Vue.component( 'bc-projects', {
 
 				<div class="illustration-item project-item" v-for="project in projects.illustration" v-on:click="showProject(project)" :key="project.id">
 					<div class="illustration-preview">
-						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/Illustration_' + n +'.jpg'"/>
+						<img class="illustration-img" v-for="n in 3" :src="'public/images/projects/illustration/Illustration_' + n +'.jpg'"/>
 					</div>
 					<div class="illustration-body">
 						<h2 class="project-title">{{ project.title }}</h2>
@@ -1003,19 +1046,19 @@ var beryl = new Vue({
 				'public/images/projects/hero-4.png',
 				'public/images/projects/hero-5.png',
 				'public/images/projects/hero-6.png',
-				'public/images/projects/Illustration_1.jpg',
-				'public/images/projects/Illustration_2.jpg',
-				'public/images/projects/Illustration_3.jpg'
+				'public/images/projects/illustration/Illustration_1.jpg',
+				'public/images/projects/illustration/Illustration_2.jpg',
+				'public/images/projects/illustration/Illustration_3.jpg'
 			]);
 			// SCRAPE IMAGES FROM PROJECTS
 			$.each( allProjects, function( index, project ){
-				var basePath = 'public/images/projects/';
+				var basePath = 'public/images/projects/' + project.id + '/';
 				if ( project.banner )
 					images.push( basePath + project.banner );
 				if ( project.mobile )
 					images.push( basePath + project.mobile );
 				if ( project.elements && project.elements.length ) {
-					var projectPath = basePath + project.id + '/';
+					var projectPath = basePath + '/';
 					$.each( project.elements, function( index, element ) {
 						if ( element.type == 'images' && element.images ) {
 							$.each( element.images, function( index, image ) {
